@@ -1,0 +1,45 @@
+---
+title: "GOV 385N Problem Set 1"
+author: "Instructor: JBrandon Duck-Mayr"
+# date: "`r gsub(' 0', ' ', x = format(Sys.Date(), '%B %d, %Y'))`"
+fontsize: 12pt
+# titlepage: true
+# abstract: "Abstract (typically should be 150 words or less)"
+output: quack::article
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Public Good Contribution
+
+(This exercise is adapted from Tadelis Exercise 3.7).
+
+Two players live in a polity.
+They can choose to contribute to fund a new school.
+Each player places a value of 2 on having the school and 0 on not having it.
+The jurisdiction's leader asks each to voluntarily contribute 1 toward the school fund.
+If both players contribute, the polity can construct the school; if only one or neither does, it cannot---and any player who contributed to the school fund does not get their money back.
+
+a. Model this story as a normal-form game and write down its matrix form
+b. Find its equilibrium or equilibra
+c. What does this teach us about politics?
+
+# Campaigning
+
+(This exercise is adapted from Tadelis Exercise 4.7).
+
+Two candidates are running for office.
+Each has one of three choices in running their campaign: focus on the positive aspects of their own platform (call this a positive campaign, or $P$), focus on the positive aspects of their own platform while attacking their opponent's campaign (call this a balanced campaign, or $B$), or focus only on attacking their opponent (call this a negative campaign, or $N$).
+Suppose all a candidate cares about is winning, so assume that if a candidate expects to win with probability $\pi in [0, 1]$, then their payoff is $\pi$.
+The probability that a candidate wins depends on their choice of campaign and their opponent's choice.
+The probabilities of winning are as follows:
+
+- If both choose the same campaign, each wins with probability 0.5
+- If candidate $i$ uses a positive campaign while $j \neq i$ uses a balanced one, then $i$ loses for sure
+- If candidate $i$ uses a positive campaign while $j \neq i$ uses a negative one then $i$ wins with probability 0.3
+- If candidate $i$ uses a negative campaign while $j \neq i$ uses a balanced one then $i$ wins with probability 0.6
+
+a. Model this story as a normal-form game and write down its matrix form
+b. Find its equilibrium or equilibra
