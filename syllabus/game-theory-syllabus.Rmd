@@ -8,7 +8,7 @@ author: "JBrandon Duck-Mayr"
 # instructorpronouns: "They/Them"
 email: "Use Canvas to email"
 office: "MEZ 3.128"
-officehours: "R 10--11 AM or appointment"
+officehours: "M 1--4 PM or appointment"
 
 # TA: "Firstname Lastname"
 # # TApronouns: "They/Them"
@@ -45,9 +45,11 @@ When you complete the course, you will
 
 # Required Readings
 
-The required text for the course is *An Introduction to Game Theory* by Martin J. Osborne.
+The text for the course is *An Introduction to Game Theory* by Martin J. Osborne.
 Any printing of the text is okay since Osborne keeps a list of all corrections and updates made since the first printing here: <https://www.economics.utoronto.ca/osborne/igt/corrections.html>.
 
+You can also use any other text you prefer, since most game theory textbooks have pretty much the same material, just presented differently.
+I prefer Osborne for this introductory course for its accessibility, but I also like *Game Theory: An Introduction* by Steven Tadelis.
 Any other required or recommended short readings will be available on Canvas.
 
 # Course Assignments
@@ -65,7 +67,7 @@ I recommend using R Markdown or LaTeX to typeset your problem set solutions, but
 
 ## Exams
 
-The midterm exam will cover games of incomplete information.
+The midterm exam will cover games of complete information.
 The final exam covers all the material presented after the midterm (games of incomplete information and repeated games).
 The final is not explicitly cumulative; that is, it will not directly ask questions about the material presented before the midterm, though it may implicitly rely on skills developed before the midterm.
 
@@ -120,7 +122,7 @@ This request must be submitted within one week of receiving your graded assigntm
    B.  Sequential games and Subgame Perfect Nash Equilibrium
        - Week Five through Seven: Sequential games, Osborne Chapter 5
    C.  **Midterm Exam** on Week Eight (March 1)
-2. Games of incomplete information
+2. Games of incomplete information and repeated games
    A.  Repeated games
        - Week Nine: Repeated games, Osborne Chapter 14
    B.  Bayesian games and Bayesian Nash Equilibrium
