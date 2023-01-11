@@ -1,0 +1,102 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Why Game Theory? What is Game Theory?"
+author: "JBrandon Duck-Mayr"
+date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Why Game Theory?
+
+. . .
+
+::: {.block}
+### George E.P. Box
+All models are wrong, but some are useful
+:::
+
+. . .
+
+- Like all models, simplified representation to gain insight
+- Formal language for strategic interactions
+- Robust predictions about human behavior?
+- **Caveat!** Like all models, only as good as the appropriateness of the assumptions
+
+## Decision Theoretic Models
+
+A decision problem is a triple $(A, X, \succsim)$, where
+
+- $A$ is a set of actions available to the decision maker,
+- $X$ is a set of outcomes, and
+- $\succsim$ is a preference relation over outcomes.
+
+## Preferences
+
+- Preference relation:
+  + Weak preference relation, $x \succsim y$ ("$x$ is at least as good as $y$")
+  + Strict preference relation, $x \succ y$, ("$x$ is better than $y$")
+  + Indifference relation, $x \sim y$
+
+## Rationality
+
+- A decision maker's preferences are *rational* if and only if their preferences are *complete* and *transitive*
+  + Completeness: A preference relation $\succsim$ is complete if and only if for any $x$ and $y$ in $X$, $x \succsim y$ or $y \succsim x$; that is, for any two outcomes in $X$, the decision maker can tell you which they (weakly) prefer
+  + Transitivity: A preference relation $\succsim$ is transitive if and only if for any $x$, $y$, and $z$ in $X$, if $x \succsim y$ and $y \succsim z$, then $x \succsim z$
+- A decision maker is considered rational if they have rational preferences and choose the best action according to their preferences
+- **Note** that this does **not** mean the decision maker's preferences have to be qualitatively "rational" or "self-interested"
+
+## Examples of Rational and Irrational Preferences
+
+- Quinn prefers blue houses to grey houses, prefers white houses to blue houses, and prefers white houses to grey houses
+- Riley prefers playing baseball to playing basketball, prefers playing chess to playing baseball, and prefers playing basketball to playing chess
+- Casey cares about both their own income as well as the income of their friend Jude.
+  + Consider three outcomes:
+    - A: \textcolor<9-10>{Blue}{Casey makes \$55,000 and Jude makes \$45,000}
+    - B: \textcolor<11>{Blue}{\textcolor<9>{DarkGreen}{Casey makes \$100,000 and Jude makes \$50,000}}
+    - C: \textcolor<10-11>{DarkGreen}{Casey makes \$50,000 and Jude makes \$100,000}
+  + Casey \textcolor<9>{BurntOrange}{prefers B to A}, \textcolor<10>{BurntOrange}{prefers C to A}, and \textcolor<11>{BurntOrange}{prefers C to B}
+
+## Payoff or utility functions
+
+- Preferences only give us *ordinal* information
+- Sometimes it can be convenient to *represent* a player's preferences by a *payoff function*
+  + Associates a number with every possible outcome
+  + Higher numbers are preferred
+- Example: Pat prefers apples to oranges, prefers bananas to apples, and prefers bananas to oranges.
+  + The payoff function $u$ where $u(\text{orange}) = 1$, $u(\text{apple}) = 2$, and $u(\text{banana}) = 3$ represents Pat's preferences
+  + A payoff function $v$ where $v(\text{orange}) = 1$, $v(\text{apple}) = 10$, and $v(\text{banana}) = 100$ would also represent Pat's preferences
+
+## Next up: Strategic games & Nash equilibrium
+
+. . .
+
+::: {.nonincremental}
+
+Reading from Osborne for next time:
+
+- Section 2.1, "Strategic games"
+- Section 2.2, "Example: the Prisoner's Dilemma"
+- Section 2.6, "Nash equilibrium"
+- Section 2.9.1, "Strict domination", and Section 2.9.2, "Weak domination"
+
+. . .
+
+Problem Set 1
+
+- Available on Canvas starting Monday, January 16
+- Must be turned in before class starts on Wednesday, January 25
+- Your reading for next class and our discussion during next class (Wednesday, January 18) will prepare you for it
+- Allowed, *and encouraged*, to work together but must write up your own solutions
+
+:::
