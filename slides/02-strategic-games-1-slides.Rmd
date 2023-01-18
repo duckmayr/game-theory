@@ -1,0 +1,363 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Strategic Games and Nash Equilibria in Pure Strategies, Part One"
+author: "JBrandon Duck-Mayr"
+date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+## What is a "strategic game"?
+
+. . .
+
+::: {.block}
+### Osborne, Definition 13.1
+A strategic game consists of
+
+\vspace*{3pt}
+
+. . .
+
+- a set of **players**
+- for each player, a set of **actions**
+- for each player, **preferences** over the set of action profiles
+:::
+
+. . .
+
+&nbsp;
+
+This is also called a "normal-form game"
+
+## Example: The Prisoner's Dilemma
+
+. . .
+
+- Two suspects in a major crime are questioned separately
+- The cops already have enough evidence to convict them of a minor crime but need a confession to convict on the major crime
+- So if neither talks, they both get convicted of the minor crime but neither gets convicted of the major crime
+- If only one of them talks, that prisoner will get a plea deal and serve no time while the other will be convicted of the major crime
+- If both talk, they are both convicted of the major crime, but get a slightly reduced sentence for confessing
+
+## The Prisoner's Dilemma as a normal form game
+
+. . .
+
+- Players: The two suspects
+- Actions: Each player can stay quiet ($C$) or talk ($D$)
+- Preferences:
+  + From best to worst, Player 1 prefers:
+    - $(D, C)$; 1 goes free and 2 is convicted of the major crime
+    - $(C, C)$; both are only convicted of the minor crime only
+    - $(D, D)$; both are convicted of the felony with a reduced sentence
+    - $(C, D)$; 1 is convicted of the major crime and pays full freight
+  + Player 2's ordering is $(C, D)$, $(C, C)$, $(D, D)$, and $(D, C)$.
+
+. . .
+
+&nbsp;
+
+A utility function that represents Player 1's preferences is $$u_1(D, C) = 3,\ u_1(C, C) = 2,\ u_1(D, D) = 1,\ u_1(C, D) = 0$$
+
+## Matrix representation of The Prisoner's Dilemma
+
+. . .
+
+```{r prisoners-dilemma-matrix}
+library(kableExtra)
+game = data.frame(
+    C = c("$2, 2$", "$3, 0$"),
+    D = c("$0, 3$", "$1, 1$"),
+    row.names = c("C", "D")
+)
+kable(game, escape = FALSE, align = "c") %>% kable_styling(position = "center")
+```
+
+## Matrix representation of The Prisoner's Dilemma
+
+I produced that for these slides using R Markdown with the code:
+
+````{verbatim, echo = TRUE}
+```{r prisoners-dilemma-matrix}
+library(kableExtra)
+game = data.frame(
+    C = c("$2, 2$", "$3, 0$"),
+    D = c("$0, 3$", "$1, 1$"),
+    row.names = c("C", "D")
+)
+kable(game, escape = FALSE, align = "c") %>%
+    kable_styling(position = "center")
+```
+````
+
+## Matrix representation of The Prisoner's Dilemma
+
+You could produce a similar payoff matrix in LaTeX with the code:
+
+````{verbatim, lang = "latex", echo = TRUE}
+\begin{game}{2}{2}
+    & $C$       & $D$       \\
+$C$ & $2, 2$    & $0, 3$    \\
+$D$ & $3, 0$    & $1, 1$
+\end{game}
+````
+
+(this requires you add `\usepackage{sgame}` to your preamble)
+
+## Nash Equilibrium
+
+. . .
+
+::: {.block}
+### Osborne, Definition 23.1
+The action profile $a^\ast$ in a strategic game... is a **Nash equilibrium** if, for every player $i$ and every action $a_i$ of player $i$, $a^\ast$ is at least as good according to player $i$'s preferences as the action profile $(a_i, a_{-i}^\ast)$ in which player $i$ chooses $a_i$ while every other player $j$ chooses $a_j^\ast$. Equivalently, for every player $i$,
+
+$$u_i\left(a^\ast\right) \geq u_i\left(a_i, a_{-i}^\ast\right) \text{ for every action } a_i \text{ of player } i,$$
+
+where $u_i$ is a payoff function that represents player $i$'s preferences.
+:::
+
+. . .
+
+In other words, a Nash equilibrium is an action profile where no player can gain by unilateral deviation
+
+## Nash equilibrium in The Prisoner's Dilemma
+
+\begin{table}
+\begin{tabular}{lcc}
+& C & D \\
+C & 2, 2 & 0, \textbf<4->{3} \\
+D & \textbf<2->{3}, 0 & \textbf<3->{1}, \textbf<5->{1}
+\end{tabular}
+\end{table}
+
+\phantom{
+\parbox{\linewidth}{
+\vspace*{\baselineskip}
+\begin{itemize}
+\tightlist
+\item $(D, D)$ is the only profile where neither can gain by deviating
+\item It is therefore the unique Nash equilibrium
+\item Notice they'd both be better off in the action profile $(C, C)$
+\item But Nash equilibrium is about unilateral deviation
+\end{itemize}
+}
+}
+
+## Nash equilibrium in The Prisoner's Dilemma
+
+\begin{table}
+\begin{tabular}{lcc}
+& C & D \\
+C & \textcolor<3->{BurntOrange}{\textbf<3->{2, 2}} & 0, \textbf{3} \\
+D & \textbf{3}, 0 & \textbf{1}, \textbf{1}
+\end{tabular}
+\end{table}
+
+&nbsp;
+
+- $(D, D)$ is the only profile where neither can gain by deviating
+- It is therefore the unique Nash equilibrium
+- Notice they'd both be better off in the action profile $(C, C)$
+- But Nash equilibrium is about *unilateral* deviation
+
+## Domination
+
+. . .
+
+::: {.block}
+### Osborne, Definition 45.1
+In a strategic game... player $i$'s action $a_i''$ **strictly dominates** her action $a_i'$ if
+
+$$ u_i\left(a_i'', a_{-i}\right) > u_i\left(a_i', a_{-i}\right) \text{ for every list } a_{-i} \text{ of the other players' actions }, $$
+
+where $u_i$ is a payoff function that represents player $i$'s preferences.
+We say that the action $a_i'$ is **strictly dominated**.
+:::
+
+. . .
+
+**Weak domination** is defined the same way, but you just replace $>$ with $\geq$ in the definition above (see Osborne, Definition 46.1).
+
+## Domination in The Prisoner's Dilemma
+
+\begin{table}
+\begin{tabular}{lcc}
+& C & D \\
+C & 2, 2 & 0, \textbf<4->{3} \\
+D & \textbf<2->{3}, 0 & \textbf<3->{1}, \textbf<5->{1}
+\end{tabular}
+\end{table}
+
+\onslide<6>{
+\vspace*{\baselineskip}
+Whether Player 1 plays $C$ or $D$, Player 2 strictly prefers to play $D$.
+Therefore, for Player 2, $D$ \textbf{strictly dominates} $C$.
+}
+
+## Another example of domination
+
+\begin{table}
+\begin{tabular}{lcc}
+  & L & R \\
+T & \textcolor<3>{Blue}{\textbf<2-3>{1}} & \textcolor<3>{Blue}{\textbf<2-3>{0}} \\
+M & \textcolor<3>{BurntOrange}{\textcolor<5>{Blue}{\textbf<2-5>{2}}} & \textcolor<3>{BurntOrange}{\textcolor<5>{Blue}{\textbf<2-5>{1}}} \\
+B & \textcolor<5>{BurntOrange}{\textbf<4-5>{3}} & \textcolor<5>{BurntOrange}{\textbf<4-5>{2}}
+\end{tabular}
+\end{table}
+
+\onslide<6>{
+\vspace*{\baselineskip}
+For Player 1, $M$ \textbf{strictly dominates} $T$, and $B$ \textbf{strictly dominates} $M$.
+}
+
+## Example: Bach or Stravinski?
+
+Two people want to go out on Friday.
+There's a concert playing music by Bach and a concert playing music by Stravinski.
+One person prefers Bach while the other prefers Stravinski.
+For both of them, the worst option is going to a concert alone.
+
+## Example: Bach or Stravinski?
+
+- Players: The two people
+- Actions: Each player can go to the Bach concert ($B$) or the Stravinski concert ($S$)
+- Preferences:
+  + From best to worst, Player 1 prefers $(B, B), (S, S), (B, S), (S, B)$
+  + From best to worst, Player 2 prefers $(S, S), (B, B), (B, S), (S, B)$
+  + Assuming they don't care about which concert they go to if alone, a utility function that represents Player 1's preferences is $$u_1(B, B) = 2,\ u_1(S, S) = 1,\ u_1(B, S) = u_1(S, B) = 0$$
+
+## Example: Bach or Stravinski?
+
+\begin{table}
+\begin{tabular}{lcc}
+& B & S \\
+B & \textbf<2->{2}, \textbf<4->{1} & 0, 0 \\
+S & 0, 0 & \textbf<3->{1}, \textbf<5->{2}
+\end{tabular}
+\end{table}
+
+\onslide<6->{
+In both the $(B, B)$ and $(S, S)$ profiles, neither player can gain from unilateral deviation.
+
+Therefore, both action profiles are a Nash equilibrium.
+}
+
+\onslide<7>{
+Does any of Player 1's actions weakly or strictly dominate any of their other actions?
+How about for Player 2?
+}
+
+## Example: Stag Hunt
+
+::: {.block}
+### Osborne, page 20 in the 9th printing
+A sentence in *Discourse on the origin and foundations of inequality among men* (1755) by the philosopher Jean-Jacques Rousseau discusses a group of hunters who wish to catch a stag... They will succeed if they all remain sufficiently attentive, but each is tempted to desert her post and catch a hare.
+:::
+
+## Example: Stag Hunt
+
+- Players: The hunters
+- Actions: Each can remain attentive to the stag ($S$) or desert and catch a hare ($H$)
+- Preferences: Each best prefers a profile where every player chooses $S$, next prefers any profile where they personally choose $H$, and lastly prefer any profile where they choose $S$ and at least one other player chooses $H$
+
+## Example: Stag Hunt
+
+A matrix representation of the two-person stag hunt is
+
+\begin{table}
+\begin{tabular}{lcc}
+& S & H \\
+S & \textbf<2->{2}, \textbf<4->{2} & 0, 1 \\
+H & 1, 0 & \textbf<3->{1}, \textbf<5->{1}
+\end{tabular}
+\end{table}
+
+\onslide<6->{
+In both the $(S, S)$ and $(H, H)$ profiles, neither player can gain from unilateral deviation.
+
+Therefore, both action profiles are a Nash equilibrium.
+}
+
+\onslide<7>{
+Does any of Player 1's actions weakly or strictly dominate any of their other actions?
+How about for Player 2?
+}
+
+## Example: Matching Pennies
+
+Two people simultaneously show each other a side of a penny.
+If they show each other the same side, Player 2 pays Player 1 $1, while if they show each other different sides, Player 1 pays Player 2 $1.
+
+## Example: Matching Pennies
+
+- Players: The two people
+- Actions: Each player can show heads ($H$) or show tails ($T$)
+- Preferences:
+  + From best to worst, Player 1 prefers $(H, H)$ or $(T, T)$, then $(H, T)$ or $(T, H)$
+  + From best to worst, Player 2 prefers $(H, T)$ or $(T, H)$, then $(H, H)$ or $(T, T)$
+  + We can represent their preferences by how much money they gain or lose; $$ u_1(H, H) = u_1(T, T) = 1,\ u_1(H, T) = u_1(T, H) = -1 $$
+
+## Example: Matching Pennies
+
+\begin{table}
+\begin{tabular}{lcc}
+& H & T \\
+H & \textbf<2->{1}, -1 & -1, \textbf<4->{1} \\
+T & -1, \textbf<5->{1} & \textbf<3->{1}, -1
+\end{tabular}
+\end{table}
+
+\onslide<6->{
+There is no Nash equilibrium in the Matching Pennies game.
+}
+
+\onslide<7>{
+Does any of Player 1's actions weakly or strictly dominate any of their other actions?
+How about for Player 2?
+}
+
+## Example: Voting
+
+Consider the following scenario:
+
+- Two candidates, $A$ and $B$, run for office
+- There are $N$ voters, with $N$ odd; some of them (a majority) prefer candidate $A$ to candidate $B$, and the rest prefer $B$ to $A$.
+- There is an election with mandatory voting; the candidate with the most votes wins
+
+## Example: Voting
+
+- Players: The $N$ voters
+- Actions: Each can vote for $A$ or vote for $B$
+- Preferences:
+  + All players are indifferent between action profiles where $A$ wins
+  + All players are indifferent between action profiles where $B$ wins
+  + Players who prefer candidate $A$ prefer any action profile where $A$ wins to any action profile where $B$ wins, and vice versa for voters who prefer candidate $B$
+
+## Example: Voting
+
+Questions:
+
+- Do the players have an action that dominates their other action?
+- Is there any Nash equilibrium where candidate $A$ wins the election?
+- Is there any Nash equilibrium where candidate $B$ wins the election?
+
+## Up next
+
+- For next time
+  + Review what we've gone over
+  + Additionally read Sections 2.8.1 to 2.8.3 in Osborne (pages 35--42 in the 9th printing)
+- Don't forget to turn in Problem Set 1 before the next class!
+- If you need help, my office hours are 1--4 p.m. on Mondays
