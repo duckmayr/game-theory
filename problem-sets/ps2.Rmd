@@ -1,0 +1,45 @@
+---
+title: "GOV 385N Problem Set 2"
+author: "Instructor: JBrandon Duck-Mayr"
+fontsize: 12pt
+output: quack::article
+---
+
+# Electoral Competition in the Hotelling-Downs Model with Three Candidates
+
+In class, we introduced the Hotelling-Downs model of electoral competition:
+The players are the candidates, who announce a "platform", i.e. a number.
+There are a continuum of voters, each with an ideal point, who vote for the candidate whose platform is closest to their ideal point.
+(If multiple candidates' platforms are equidistant from a particular point, they evenly split the relevant voters).
+The candidates only care about winning; they most prefer winning to tying for first place, and prefer tying for first place to losing.
+Recall that $m$ denotes the point such that exactly half of the voters' ideal points are no more than $m$ and exactly half of the voters' ideal points are no less than $m$.
+
+In class we considered the case of two party competition; what happens with more parties?
+Specifically, consider the case where there are three candidates, Candidate A, Candidate B, and Candidate C.
+
+a. When there are three candidates, is it still a Nash equilibrium for every candidate to choose $m$ as their platform? Explain why or why not.
+b. Are there any Nash equilibria where at least one candidate does not choose $m$ as their platform? Either describe one such equilibrium and explain why it is a Nash equilibrium or explain why you think there are no such equilibria.
+
+# Cournot's Duopoly
+
+Consider two firms who sell the same good.
+Each firm chooses a quantity $q_i$ of the good to produce.
+Denote by $Q$ the total quantity produced, i.e. $Q = q_1 + q_2$.
+The market price $P(Q)$ for each unit of the good is
+
+$$
+P(Q) =
+\begin{cases}
+\alpha - Q \text{ if } Q \leq \alpha \\
+0 \text{ if } Q > \alpha,
+\end{cases}
+$$
+
+where $\alpha$ is a constant.
+Production per unit is the same for each firm; each firm's cost of production is $C_i(q_i) = c q_i$, where $c$ is a constant.
+Each firm's profit is its revenue minus its costs, $\pi_i(q_1, q_2) = q_i P(Q) - C_i(q_i)$.
+Each firm cares only about its profit.
+
+a. Find the firms' best response functions.
+b. Depict the firms' best response functions including where they intersect, if anywhere.
+c. What are the Nash equibria, if any, of this game?
