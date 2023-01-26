@@ -1,0 +1,463 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Strategic Games and Nash Equilibria in Pure Strategies, Part Two"
+author: "JBrandon Duck-Mayr"
+date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+    - \newcommand{\pd}[1]{\ensuremath{\frac{\partial}{\partial{#1}}}}
+    - \newcommand{\gray}{\color{white}}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+quack::attach_common_packages()
+```
+
+## Recap
+
+. . .
+
+- A strategic or normal-form game consists of
+  + Players
+  + For each player, a set of actions
+  + For each player, preferences over the set of action profiles
+- Nash equilibrium: quality of an action profile
+  + Action profile is NE if no player can gain from unilateral deviation
+- Domination: comparison between two actions of one player
+  + Strict domination: Action A strictly dominates action B if the player strictly prefers all action profiles where they play A to all action profiles where they play B
+  + Weak domination: A weakly dominates B if we change "strictly prefers" to "weakly prefers" **and** require the preference is strict in at least one action profile
+
+## Dominance Solvable Games
+
+. . .
+
+- A game is **dominance solvable** if iterated elimination of dominated actions leaves only one actions left for each player
+- If you are eliminating only strictly dominated strategies, the remaining action profile is the unique Nash equilibrium to the game (IESDS / IDSDS)
+  + Order of elimination does **not** matter
+- If you are also eliminating weakly dominated strategies, the remaining action profile will be a Nash equilibrium, but you may have eliminated other Nash equilibria (IEWDS / IDWDS)
+  + Order of elimination **does** matter
+
+## Dominance Solvable Games: Examples
+
+\begin{figure}
+\centering
+The Prisoner's Dilemma
+\end{figure}
+\begin{table}
+\begin{tabular}{lcc}
+& \textcolor<5>{LightGray}{C} & \textbf<5>{D} \\
+\textcolor<3->{LightGray}{C} &
+\textcolor<2>{Blue}{\textcolor<3->{LightGray}{\textbf<2>{2}}}\textcolor<3->{LightGray}{,} \textcolor<3->{LightGray}{2} &
+\textcolor<2>{Blue}{\textcolor<3->{LightGray}{\textbf<2>{0}}}\textcolor<3->{LightGray}{,} \textcolor<3->{LightGray}{3} \\
+\textbf<5>{D} &
+\textcolor<2>{DarkGreen}{\textcolor<5>{LightGray}{\textbf<2>{3}}}\textcolor<5>{LightGray}{,} \textcolor<4>{Blue}{\textcolor<5>{LightGray}{\textbf<4>{0}}} &
+\textcolor<2>{DarkGreen}{\textbf<2, 5>{1}}\textbf<5>{, }\textcolor<4>{DarkGreen}{\textbf<4, 5>{1}}
+\end{tabular}
+\end{table}
+
+## Dominance Solvable Games: Examples
+
+\begin{figure}
+\centering
+Bach or Stravinski
+\end{figure}
+\begin{table}
+\begin{tabular}{lcc}
+& B & S \\
+B & 2, 1 & 0, 0 \\
+S & 0, 0 & 1, 2
+\end{tabular}
+\end{table}
+
+## Dominance Solvable Games: Examples
+
+\begin{table}
+\begin{tabular}{lccc}
+& L & C & R \\
+T & 0, 0 & 1, 0 & 1, 1 \\
+M & 1, 0 & 1, 1 & 3, 2 \\
+B & 1, 0 & 2, 1 & 2, 2
+\end{tabular}
+\end{table}
+
+## Dominance Solvable Games: Examples
+
+\begin{table}
+\begin{tabular}{lccc}
+& L & C & R \\
+T & 0, 0 & 1, 0 & 1, 1 \\
+M & 1, 1 & 1, 1 & 3, 2 \\
+B & 1, 1 & 2, 1 & 2, 2
+\end{tabular}
+\end{table}
+
+## More Voting: The Hotelling-Downs Model
+
+. . .
+
+Consider the following model of elections:
+
+- Two candidates seek election & *only* care about winning office
+- (They prefer winning to tying and prefer tying to losing)
+- Suppose there is a unidimensional policy space
+- The candidates run for office on a platform (a point)
+- There are a continuum of voters each with an ideal point
+- They vote for the candidate closest to their ideal point
+- (If multiple platforms are equidistant from a point, the candidates evenly split the relevant voters)
+
+## More Voting: The Hotelling-Downs Model
+
+Questions:
+
+- Who are the players?
+- Are you already familiar with the game's solution?
+- How would you find the solution to this game?
+
+## Even More Voting! The Calvert-Wittman Model
+
+- What if the candidates cared about policy rather than winning?
+- (These are sometimes called "citizen-candidates")
+- Does this change the Nash equilibrium? (Focus on the case where the two candidates' ideal points are on opposite sides of the median)
+
+## Even More Voting!!!
+
+We could think about lots more extensions or tweaks:
+
+. . .
+
+- What about asymmetric voter preferences?
+- What about "valence"?
+- What about stochastic voting?
+- What about multiple dimensions?
+- Etc, etc, etc
+
+## Best Response Functions
+
+The \textbf{best response function} of player $i$ is $$
+B_i\left(a_{-i}\right) = \{ a_i \in A_i : u_i\left(a_i, a_{-i}\right) \geq u_i\left(a_i', a_{-i}\right) \forall\ a_i' \in A_i \}$$
+
+\invisible{
+\begin{block}{Osborne Proposition 36.1}
+The action profile $a^\ast$ is a Nash equilibrium of a strategic game... if and only if every player's action is a best response to the other player's actions:
+
+$$
+a_i^\ast \text{ is in } B_i\left(a_{-i}^\ast\right) \text{ for every player } i.
+$$
+\end{block}
+}
+
+## Best Response Functions
+
+The \textbf{best response function} of player $i$ is $$
+\mathbf{B_i\left(a_{-i}\right)} = \{ a_i \in A_i : u_i\left(a_i, a_{-i}\right) \geq u_i\left(a_i', a_{-i}\right) \forall\ a_i' \in A_i \}$$
+
+\invisible{
+\begin{block}{Osborne Proposition 36.1}
+The action profile $a^\ast$ is a Nash equilibrium of a strategic game... if and only if every player's action is a best response to the other player's actions:
+
+$$
+a_i^\ast \text{ is in } B_i\left(a_{-i}^\ast\right) \text{ for every player } i.
+$$
+\end{block}
+}
+
+## Best Response Functions
+
+The \textbf{best response function} of player $i$ is $$
+B_i\left(a_{-i}\right) = \textcolor{BurntOrange}{\Bigl\{} a_i \in A_i : u_i\left(a_i, a_{-i}\right) \geq u_i\left(a_i', a_{-i}\right) \forall\ a_i' \in A_i \textcolor{BurntOrange}{\Bigr\}}$$
+
+\invisible{
+\begin{block}{Osborne Proposition 36.1}
+The action profile $a^\ast$ is a Nash equilibrium of a strategic game... if and only if every player's action is a best response to the other player's actions:
+
+$$
+a_i^\ast \text{ is in } B_i\left(a_{-i}^\ast\right) \text{ for every player } i.
+$$
+\end{block}
+}
+
+## Best Response Functions
+
+The \textbf{best response function} of player $i$ is $$
+B_i\left(a_{-i}\right) = \{ a_i \in A_i : u_i\left(a_i, a_{-i}\right) \geq u_i\left(a_i', a_{-i}\right) \forall\ a_i' \in A_i \}$$
+
+::: {.block}
+### Osborne Proposition 36.1
+The action profile $a^\ast$ is a Nash equilibrium of a strategic game... if and only if every player's action is a best response to the other player's actions:
+
+$$
+a_i^\ast \text{ is in } B_i\left(a_{-i}^\ast\right) \text{ for every player } i.
+$$
+:::
+
+## Best Response Functions: Voting example
+
+- Let's revisit the Hotelling-Downs model of elections
+<!-- - We can characterize each candidate's best response function by -->
+<!--   + Determining the exhaustive list of cases for the other player's move -->
+<!--   + Holding the other player's move constant in one of those cases, -->
+<!--     determine the best response to that move -->
+- Candidate 2's platform $x_2$ could be
+  + $x_2 < m$
+  + $x_2 = m$
+  + $x_2 > m$
+
+\onslide<6>{
+$$
+B_1\left(x_2\right) =
+\begin{cases}
+\left\{ x_1 : x_2 < x_1 < 2m - x_2 \right\} & \text{ if } x_2 < m \\
+\left\{ m \right\} & \text{ if } x_2 = m \\
+\left\{ x_1 : 2m - x_2 < x_1 < x_2 \right\} & \text{ if } x_2 < m
+\end{cases}
+$$
+}
+
+## Best Response Functions: Voting example
+
+```{r voting-br1, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center"}
+dots = data.frame(x1 = c(0, 0, 1, 1), x2 = c(0, 1, 0, 1))
+segs = data.frame(x1 = c(0, 0), x2 = c(0, 1), x11 = c(1, 1), x21 = c(0, 1))
+shp1 = data.frame(x1 = c(0, 0.5, 1), x2 = c(1, 0.5, 1))
+shp2 = data.frame(x1 = c(0, 0.5, 1), x2 = c(0, 0.5, 0))
+blue = "dodgerblue4"
+ggplot(data = dots, mapping = aes(x = x1, y = x2)) +
+    geom_polygon(data = shp1, fill = blue, alpha = 1/2) +
+    geom_polygon(data = shp2, fill = blue, alpha = 1/2) +
+    geom_text(
+        aes(x = 0.5, y = 0.75),
+        label = "B[1](x[2])", parse = TRUE,
+        color = blue, fontface = "bold"
+    ) +
+    geom_point(aes(x = 0.5, y = 0.5), shape = 19, color = blue, size = 2) +
+    geom_segment(
+        mapping = aes(xend = x11, yend = x21), data = segs,
+        color = blue, linewidth = 1
+    ) +
+    geom_point(shape = 21, color = blue, fill = "white", size = 2) +
+    scale_x_continuous(breaks = 0.5, labels = "m") +
+    scale_y_continuous(breaks = 0.5, labels = "m") +
+    theme_classic()
+```
+
+## Best Response Functions: Voting example
+
+```{r voting-br2, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center"}
+seg2 = data.frame(x2 = c(0, 0), x1 = c(0, 1), x21 = c(1, 1), x11 = c(0, 1))
+shp3 = data.frame(x2 = c(0, 0.5, 1), x1 = c(1, 0.5, 1))
+shp4 = data.frame(x2 = c(0, 0.5, 1), x1 = c(0, 0.5, 0))
+red  = "firebrick3"
+ggplot(data = dots, mapping = aes(x = x1, y = x2)) +
+    geom_polygon(data = shp3, fill = red,  alpha = 1/2) +
+    geom_polygon(data = shp4, fill = red,  alpha = 1/2) +
+    geom_text(
+        aes(y = 0.5, x = 0.75),
+        label = "B[2](x[1])", parse = TRUE,
+        color = red, fontface = "bold"
+    ) +
+    geom_point(aes(x = 0.5, y = 0.5), shape = 19, color = red, size = 2) +
+    geom_segment(
+        mapping = aes(xend = x11, yend = x21), data = seg2,
+        color = red, linewidth = 1
+    ) +
+    geom_point(shape = 21, color = red, fill = "white", size = 2) +
+    scale_x_continuous(breaks = 0.5, labels = "m") +
+    scale_y_continuous(breaks = 0.5, labels = "m") +
+    theme_classic()
+```
+
+## Best Response Functions: Voting example
+
+```{r voting-both-br, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center"}
+purp = "#6e3a58"
+ggplot(data = dots, mapping = aes(x = x1, y = x2)) +
+    geom_polygon(data = shp1, fill = blue, alpha = 1/2) +
+    geom_polygon(data = shp2, fill = blue, alpha = 1/2) +
+    geom_polygon(data = shp3, fill = red,  alpha = 1/2) +
+    geom_polygon(data = shp4, fill = red,  alpha = 1/2) +
+    geom_text(
+        aes(x = 0.5, y = 0.75),
+        label = "B[1](x[2])", parse = TRUE,
+        color = blue, fontface = "bold"
+    ) +
+    geom_text(
+        aes(y = 0.5, x = 0.75),
+        label = "B[2](x[1])", parse = TRUE,
+        color = red, fontface = "bold"
+    ) +
+    geom_point(aes(x = 0.5, y = 0.5), shape = 19, color = purp, size = 2) +
+    geom_segment(
+        mapping = aes(xend = x11, yend = x21), data = segs,
+        color = blue, linewidth = 1
+    ) +
+    geom_segment(
+        mapping = aes(xend = x11, yend = x21), data = seg2,
+        color = red, linewidth = 1
+    ) +
+    geom_point(shape = 21, color = purp, fill = "white", size = 2) +
+    scale_x_continuous(breaks = 0.5, labels = "m") +
+    scale_y_continuous(breaks = 0.5, labels = "m") +
+    theme_classic()
+```
+
+## Best Response Functions: Public good example
+
+- Now let's consider a public good problem (Osborne Ex. 44.1)
+- Two people with wealth $w$ each choose a contribution level $c_i$ to the public good
+- Suppose they value the public good itself ($c_1 + c_2$) as well as their own private consumption ($w - c_i$) and value their private consumption more as the amount of the public good increases
+
+\onslide<4>{
+\begin{align*}
+u_i\left(c_1, c_2\right)
+& = c_1 + c_2 + w - c_i + (w - c_i) (c_1 + c_2) \\
+& = w + c_j + (w - c_i) (c_1 + c_2)
+\end{align*}
+}
+
+## Best Response Functions: Public good example
+
+::: {.nonincremental}
+
+- Now let's consider a public good problem (Osborne Ex. 44.1)
+- Two people with wealth $w$ each choose a contribution level $c_i$ to the public good
+- Suppose they value the public good itself ($c_1 + c_2$) as well as their own private consumption ($w - c_i$) and value their private consumption more as the amount of the public good increases: $$ u_i\left(c_1, c_2\right) = w + c_j + (w - c_i) (c_1 + c_2) $$
+- How would you find the players' best response functions?
+
+:::
+
+## Best Response Functions: Public good example
+
+\begin{align*}
+u_i\left(c_i, c_j\right) & = w + c_j + (w - c_i) (c_i + c_j) \\
+& = w + c_j + w c_i + w c_j - c_i c_j - c_i^2 \\
+\gray\pd{c_i} u_i
+&\gray = \pd{c_i} w c_i - \pd{c_i} c_i c_j - \pd{c_i} c_i^2 \\
+&\gray = w - c_j - 2 c_i \\
+\gray 0 &\gray \equiv w - c_j - 2 c_i \\
+\gray 2 c_i &\gray = w - c_j \\
+\gray c_i^\ast &\gray = \frac{1}{2} \left( w - c_j \right)
+\end{align*}
+
+## Best Response Functions: Public good example
+
+\begin{align*}
+u_i\left(c_i, c_j\right) & = w + c_j + (w - c_i) (c_i + c_j) \\
+& = w + c_j + w c_i + w c_j - c_i c_j - c_i^2 \\
+\pd{c_i} u_i & = \pd{c_i} w c_i - \pd{c_i} c_i c_j - \pd{c_i} c_i^2 \\
+& = w - c_j - 2 c_i \\
+\gray 0 & \gray\equiv w - c_j - 2 c_i \\
+\gray 2 c_i & \gray = w - c_j \\
+\gray c_i^\ast & \gray = \frac{1}{2} \left( w - c_j \right)
+\end{align*}
+
+## Best Response Functions: Public good example
+
+\begin{align*}
+u_i\left(c_i, c_j\right) & = w + c_j + (w - c_i) (c_i + c_j) \\
+& = w + c_j + w c_i + w c_j - c_i c_j - c_i^2 \\
+\pd{c_i} u_i & = \pd{c_i} w c_i - \pd{c_i} c_i c_j - \pd{c_i} c_i^2 \\
+& = w - c_j - 2 c_i \\
+0 & \equiv w - c_j - 2 c_i \\
+2 c_i & = w - c_j \\
+c_i^\ast & = \frac{1}{2} \left( w - c_j \right)
+\end{align*}
+
+## Best Response Functions: Public good example
+
+```{r public-good-b2, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center"}
+f = function(cj, w = 1) 0.5 * (w - cj)
+A = seq(0, 1, 0.01)
+d = data.frame(c1 = A, c2 = f(A))
+ggplot(data = d, mapping = aes(x = c1, y = c2)) +
+    geom_line(linewidth = 1, color = red) +
+    geom_text(
+        aes(x = 0.8, y = 0.25),
+        label = "B[2](c[1])", parse = TRUE,
+        color = red, fontface = "bold"
+    ) +
+    scale_x_continuous(breaks = c(0, 1/2, 1), labels = c(0, "w/2", "w"), limits = c(0, 1)) +
+    scale_y_continuous(breaks = c(0, 1/2, 1), labels = c(0, "w/2", "w"), limits = c(0, 1)) +
+    theme_classic()
+```
+
+## Best Response Functions: Public good example
+
+```{r public-good-b1, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center"}
+d = data.frame(c2 = A, c1 = f(A))
+ggplot(data = d, mapping = aes(x = c1, y = c2)) +
+    geom_line(linewidth = 1, color = blue) +
+    geom_text(
+        aes(y = 0.8, x = 0.25),
+        label = "B[1](c[2])", parse = TRUE,
+        color = blue, fontface = "bold"
+    ) +
+    scale_x_continuous(breaks = c(0, 1/2, 1), labels = c(0, "w/2", "w"), limits = c(0, 1)) +
+    scale_y_continuous(breaks = c(0, 1/2, 1), labels = c(0, "w/2", "w"), limits = c(0, 1)) +
+    theme_classic()
+```
+
+## Best Response Functions: Public good example
+
+```{r public-good-both, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center"}
+d = data.frame(c1 = c(A, f(A)), c2 = c(f(A), A), B = rep(c("B2", "B1"), each = length(A)))
+pal = c(B1 = blue, B2 = red)
+ggplot(data = d, mapping = aes(x = c1, y = c2, color = B)) +
+    geom_line(linewidth = 1) +
+    geom_point(aes(x = 1/3, y = 1/3), color = purp, size = 3) +
+    geom_text(
+        aes(x = 0.8, y = 0.25),
+        label = "B[2](c[1])", parse = TRUE,
+        color = red, fontface = "bold"
+    ) +
+    geom_text(
+        aes(y = 0.8, x = 0.25),
+        label = "B[1](c[2])", parse = TRUE,
+        color = blue, fontface = "bold"
+    ) +
+    scale_x_continuous(breaks = c(0, 1/3, 1/2, 1), labels = c(0, "w/3", "w/2", "w"), limits = c(0, 1)) +
+    scale_y_continuous(breaks = c(0, 1/3, 1/2, 1), labels = c(0, "w/3", "w/2", "w"), limits = c(0, 1)) +
+    scale_color_manual(values = pal) +
+    theme_classic() +
+    theme(legend.position = "none")
+```
+
+## Best Response Functions: Public good example
+
+\begin{align*}
+c_i^\ast & = \frac{1}{2} \left( w - c_j^\ast \right) \\
+\gray c_i^\ast & \gray = \frac{1}{2} \left( w - \frac{1}{2} \left( w - c_i^\ast \right) \right) \\
+\gray c_i^\ast & \gray = w/4 + c_i^\ast/4 \\
+\gray 4 c_i^\ast & \gray = w + c_i^\ast \\
+\gray 3 c_i^\ast & \gray = w \\
+\gray c_i^\ast & \gray = w / 3
+\end{align*}
+
+## Best Response Functions: Public good example
+
+\begin{align*}
+c_i^\ast & = \frac{1}{2} \left( w - c_j^\ast \right) \\
+c_i^\ast & = \frac{1}{2} \left( w - \frac{1}{2} \left( w - c_i^\ast \right) \right) \\
+\gray c_i^\ast & \gray = w/4 + c_i^\ast/4 \\
+\gray 4 c_i^\ast & \gray = w + c_i^\ast \\
+\gray 3 c_i^\ast & \gray = w \\
+\gray c_i^\ast & \gray = w / 3
+\end{align*}
+
+## Best Response Functions: Public good example
+
+\begin{align*}
+c_i^\ast & = \frac{1}{2} \left( w - c_j^\ast \right) \\
+c_i^\ast & = \frac{1}{2} \left( w - \frac{1}{2} \left( w - c_i^\ast \right) \right) \\
+ c_i^\ast &  = w/4 + c_i^\ast/4 \\
+ 4 c_i^\ast &  = w + c_i^\ast \\
+ 3 c_i^\ast &  = w \\
+ c_i^\ast &  = w / 3
+\end{align*}
