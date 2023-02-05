@@ -1,0 +1,47 @@
+---
+title: "GOV 385N Problem Set 3"
+author: "Instructor: JBrandon Duck-Mayr"
+fontsize: 12pt
+output: quack::article
+---
+
+The following problems have been very lightly edited from problems in Tadelis, largely to make language gender-neutral.
+When finding Nash equilibria, please show any work / math / logic or argumentation you used to find them.
+
+# Monitoring (Tadelis 6.4)
+
+An employee (player 1) who works for a boss (player 2) can either work ($W$) or shirk ($S$), while their boss can either monitor the employee ($M$) or ignore them ($I$).
+As in many employee-boss relationships, if the employee is working, then the boss prefers not to monitor, but if the boss is not monitoring then the employee prefers to shirk. The game is represented by the following matrix:
+
+\begin{center}
+\begin{tabular}{lcc}
+    & $M$       & $I$    \\
+$W$ & $1, 1$    & $1, 2$ \\
+$S$ & $0, 2$    & $2, 1$
+\end{tabular}
+\end{center}
+
+a. Draw the best response function of each player.
+b. Find the Nash equilibrium of the game. What kind of game does this game remind you of?
+
+# Market Entry (Tadelis 6.8)
+
+Three firms are considering entering a new market.
+The payoff for each firm that enters is $150/n$, where $n$ is the number of firms that enter.
+The cost of entering is $62$.
+
+a. Find all the pure-strategy Nash equilibria.
+b. Find the symmetric mixed-strategy equilibrium in which all three players enter with the same probability.
+
+# Discrete All-Pay Auction (Tadelis 6.9)
+
+Consider the following all-pay auction:
+Each bidder submits a bid.
+The highest bidder gets the good, but *all bidders pay their bids*.
+Consider an auction in which Player 1 values the item at 3 while Player 2 values the item at 5.
+Each player can bid either 0, 1, or 2.
+If Player $i$ bids more than Player $j$ then $i$ wins the good and both pay.
+If both players bid the same amount then a coin is tossed to determine who gets the good, but again both pay.
+
+a. Write down the game in matrix form. Which strategies survive iterated elimination of strictly dominated strategies?
+b. Find the Nash equilibria for this game.
