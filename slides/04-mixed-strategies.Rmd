@@ -1,0 +1,366 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Mixed Strategies"
+author: "JBrandon Duck-Mayr"
+date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+    - \newcommand{\pd}[1]{\ensuremath{\frac{\partial}{\partial{#1}}}}
+    - \newcommand{\gray}{\color{white}}
+output:
+    quack::presentation:
+        toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+quack::attach_common_packages()
+```
+
+## Recap
+
+::: nonincremental
+- A strategic or normal-form game consists of
+  + Players
+  + For each player, a set of actions
+  + For each player, preferences over the set of action profiles
+- Nash equilibrium: quality of an action profile
+  + Action profile is NE if no player can gain from unilateral deviation
+- Domination: comparison between two actions of one player
+  + Strict domination: Action A strictly dominates action B if the player strictly prefers all action profiles where they play A to all action profiles where they play B
+  + Weak domination: A weakly dominates B if we change "strictly prefers" to "weakly prefers" **and** require the preference is strict in at least one action profile
+:::
+
+## Recap
+
+::: nonincremental
+- A game is dominance solvable if iterated elimination of dominated actions leaves only one actions left for each player
+- A player's best response function tells you which of their actions are at least as good as any of their other available actions according to their preferences, given a combination of actions of every other player
+- An action profile is a Nash equilibrium of a strategic game if and only if every player's action is a best response to the other player's actions
+:::
+
+## Mixed Strategies
+
+Now we will introduce "mixed strategies", or allowing the players to randomize
+
+::: {.block}
+### Osborne Definition 107.1
+A **mixed strategy** of a player in a strategic game is a probability distribution over the player's actions.
+:::
+
+## Mixed Strategy Nash Equilibrium
+
+::: {.block}
+### Osborne Proposition 116.2
+A mixed strategy profile $\alpha^\ast$ in a strategic game with vNM preferences in which each player has finitely many actions is a mixed strategy Nash equilibrium if and only if, for each player $i$,
+
+&nbsp;
+
+- the expected payoff, given $\alpha_{-i}^\ast$, to every action to which $\alpha_i^\ast$ assigns positive probability is the same
+- The expected payoff, given $\alpha_{-i}^\ast$, to every action to which $\alpha_i^\ast$ assigns zero probability is at most the expected payoff to any action to which $\alpha_i^\ast$ assigns positive probability.
+
+&nbsp;
+
+Each player's expected payoff in an equilibrium is her expected payoff to any of her actions that she uses with positive probability
+:::
+
+## Example: Matching Pennies
+
+\begin{table}
+\begin{tabular}{lcc}
+& H & T \\
+H & 1, -1 & -1, 1 \\
+T & -1, 1 & 1, -1
+\end{tabular}
+\end{table}
+
+. . .
+
+Let $p$ be the probability player 1 chooses $H$ and $q$ be the probability 2 chooses $H$.
+
+. . .
+
+Then
+
+\begin{align*}
+EU_1(H) & =  q - (1 - q) \\
+EU_1(T) & = -q + (1 - q).
+\end{align*}
+
+## Example: Matching Pennies
+
+Player 1 can mix over $H$ and $T$ if
+
+\begin{align*}
+EU_1(H) & = EU_1(T) \\
+q - (1 - q) & = -q + (1 - q) \\
+q - 1 + q & = -q + 1 - q \\
+2q - 1 & = 1 - 2q \\
+4q & = 2 \\
+q & = 1/2.
+\end{align*}
+
+## Example: Matching Pennies
+
+Similarly,
+
+\begin{align*}
+EU_2(H) & = -p + (1 - p) \\
+EU_2(T) & =  p - (1 - p),
+\end{align*}
+
+and player 2 can mix over $H$ and $T$ if
+
+\begin{align*}
+EU_2(H) & = EU_2(T) \\
+-p + (1 - p) & = p - (1 - p) \\
+1 - 2p & = 2p - 1 \\
+2 & = 4p \\
+1/2 & = p.
+\end{align*}
+
+## Example: Matching Pennies
+
+The players' best response functions, then, are
+
+. . .
+
+$$
+BR_1(q) =
+\begin{cases}
+       p = 1 & \text{ if } q > 1/2 \\
+p \in [0, 1] & \text{ if } q = 1/2 \\
+       p = 0 & \text{ if } q < 1/2
+\end{cases},
+$$
+
+and
+
+$$
+BR_2(p) =
+\begin{cases}
+       q = 1 & \text{ if } p < 1/2 \\
+q \in [0, 1] & \text{ if } p = 1/2 \\
+       q = 0 & \text{ if } p > 1/2
+\end{cases}.
+$$
+
+## Example: Matching Pennies
+
+
+```{r mp-br, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center"}
+d = data.frame(
+    p = c(0, 1/2, 1/2, 1, 0,   0,   1, 1),
+    q = c(1,   1,   0, 0, 0, 1/2, 1/2, 1),
+    Label = c(rep("BR2", 4), rep("BR1", 4))
+)
+e = data.frame(
+    p = c(1/2),
+    q = c(1/2),
+    Label = "NE"
+)
+pal = c(BR1 = "dodgerblue4", BR2 = "firebrick3", NE = "maroon4")
+ggplot(data = d, mapping = aes(x = p, y = q, color = Label)) +
+    geom_line(linewidth = 1) +
+    geom_point(data = e, size = 3) +
+    geom_text(
+        mapping = aes(x = 0.2, y = 0.4, label = "BR[1](q)"),
+        color = "dodgerblue4", parse = TRUE
+    ) +
+    geom_text(
+        mapping = aes(x = 0.65, y = 0.8, label = "BR[2](p)"),
+        color = "firebrick3", parse = TRUE
+    ) +
+    scale_color_manual(values = pal) +
+    theme_bw() +
+    theme(legend.position = "none")
+```
+
+## Example: Bach or Stravinski
+
+\begin{table}
+\begin{tabular}{lcc}
+& B & S \\
+B & 2, 1 & 0, 0 \\
+S & 0, 0 & 1, 2
+\end{tabular}
+\end{table}
+
+. . .
+
+Let $p$ be the probability Player 1 plays $B$ and $q$ be the probability Player 2 plays $B$.
+
+. . .
+
+Then
+
+\begin{align*}
+EU_1(B) & = 2q \\
+EU_1(S) & = 1 - q.
+\end{align*}
+
+## Example: Bach or Stravinski
+
+Player 1 can mix over $B$ and $S$ if
+
+\begin{align*}
+EU_1(B) & = EU_1(S) \\
+2q & = 1 - q \\
+3q & = 1 \\
+q & = 1/3.
+\end{align*}
+
+## Example: Bach or Stravinski
+
+Similarly,
+
+\begin{align*}
+EU_2(B) & = p \\
+EU_2(S) & = 2(1 - p),
+\end{align*}
+
+and player 2 can mix over $B$ and $S$ if
+
+\begin{align*}
+EU_2(B) & = EU_2(S) \\
+p & = 2(1 - p) \\
+p & = 2 - 2p \\
+3p & = 2 \\
+p & = 2/3.
+\end{align*}
+
+## Example: Bach or Stravinski
+
+The players' best response functions, then, are
+
+. . .
+
+$$
+BR_1(q) =
+\begin{cases}
+       p = 1 & \text{ if } q > 1/3 \\
+p \in [0, 1] & \text{ if } q = 1/3 \\
+       p = 0 & \text{ if } q < 1/3
+\end{cases},
+$$
+
+and
+
+$$
+BR_2(p) =
+\begin{cases}
+       q = 1 & \text{ if } p > 2/3 \\
+q \in [0, 1] & \text{ if } p = 2/3 \\
+       q = 0 & \text{ if } p < 2/3
+\end{cases}.
+$$
+
+## Example: Bach or Stravinski
+
+```{r b-s-br, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center"}
+d = data.frame(
+    p = c(0, 2/3, 2/3, 1, 0,   0,   1, 1),
+    q = c(0,   0,   1, 1, 0, 1/3, 1/3, 1),
+    Label = c(rep("BR2", 4), rep("BR1", 4))
+)
+e = data.frame(
+    p = c(0, 2/3, 1),
+    q = c(0, 1/3, 1),
+    Label = "NE"
+)
+pal = c(BR1 = "dodgerblue4", BR2 = "firebrick3", NE = "maroon4")
+ggplot(data = d, mapping = aes(x = p, y = q, color = Label)) +
+    geom_line(linewidth = 1) +
+    geom_point(data = e, size = 3) +
+    geom_text(
+        mapping = aes(x = 0.2, y = 0.4, label = "BR[1](q)"),
+        color = "dodgerblue4", parse = TRUE
+    ) +
+    geom_text(
+        mapping = aes(x = 0.5, y = 0.8, label = "BR[2](p)"),
+        color = "firebrick3", parse = TRUE
+    ) +
+    scale_color_manual(values = pal) +
+    theme_bw() +
+    theme(legend.position = "none")
+```
+
+## Example: Bach or Stravinski
+
+So
+
+$$
+(p, q) \in \{ (0, 0), (2/3, 1/3), (1, 1) \}
+$$
+
+are all Nash equilibria to the Bach or Stravinski game
+
+## Example: Stag Hunt
+
+\begin{table}
+\begin{tabular}{lcc}
+& S & H \\
+S & 2, 2 & 0, 1 \\
+H & 1, 0 & 1, 1
+\end{tabular}
+\end{table}
+
+## Domination and Mixed Strategies
+
+## Example 
+
+\begin{table}
+\begin{tabular}{lccc}
+& L & C & R \\
+T & 5, 1 & 1, 4 & 1, 0 \\
+M & 3, 2 & 0, 0 & 3, 5 \\
+B & 4, 3 & 4, 4 & 0, 3
+\end{tabular}
+\end{table}
+
+\onslide<2>{
+$$
+EU_2(0, 1/2, 1/2) =
+\begin{cases}
+2   & \text{ if } 1 \text{ chooses } T \\
+2.5 & \text{ if } 1 \text{ chooses } M \\
+3.5 & \text{ if } 1 \text{ chooses } B
+\end{cases}
+$$
+
+}
+
+## Example 
+
+\begin{table}
+\begin{tabular}{lcc}
+& C & R \\
+T & 1, 4 & 1, 0 \\
+M & 0, 0 & 3, 5 \\
+B & 4, 4 & 0, 3
+\end{tabular}
+\end{table}
+
+\onslide<2>{
+$$
+EU_1(0, 1/2, 1/2) =
+\begin{cases}
+2   & \text{ if } 2 \text{ chooses } C \\
+1.5 & \text{ if } 2 \text{ chooses } R
+\end{cases}
+$$
+
+}
+
+## Example 
+
+\begin{table}
+\begin{tabular}{lcc}
+& C & R \\
+M & 0, 0 & 3, 5 \\
+B & 4, 4 & 0, 3
+\end{tabular}
+\end{table}

@@ -1,0 +1,169 @@
+---
+title: "Tips on Plotting for GOV 385N"
+author: "Instructor: JBrandon Duck-Mayr"
+fontsize: 12pt
+header-includes:
+    - \usepackage{graphicx}
+output:
+    quack::article:
+        highlight: haddock
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::knit_hooks$set(make_smaller = function(before, options, envir) {
+    if ( before ) {
+        return("\\footnotesize")
+    } else {
+        return("\\normalsize")
+    }
+})
+```
+
+Recall the public good problem from Osborne Exercise 44.1 that we talked about in class, where two people with wealth $w$ each choose a contribution level $c_i$ to the public good and have preferences represented by the utility function
+
+$$
+u_i\left(c_i, c_j\right) = w + c_j + (w - c_i) (c_i + c_j).
+$$
+
+Remember that we determined the players' best response functions to be
+
+$$
+B_i \left( c_j \right) = \frac{1}{2} (w - c_j).
+$$
+
+Here is the code I used to plot these best response functions and their intersection for the class slides:
+
+```{r public-good-example, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center", make_smaller = TRUE}
+## Attach the ggplot2 package
+library(ggplot2)
+## First define the players' set of actions, c_i \in [0, w]
+## (I'll arbitrarily use w = 1)
+A = seq(0, 1, 0.01)
+## Then define the best response function, given above
+B = function(cj, w = 1) 0.5 * (w - cj)
+## Now create a data frame where each row records
+## - B, i.e. which best response function (B1 or B2) the row corresponds to
+## - the c1 value (either an element of A if B = B2 or B(A) if B = B1)
+## - the c2 value (either an element of A if B = B1 or B(A) if B = B2)
+d = data.frame(
+    B = rep(c("B2", "B1"), each = length(A)),
+    c1 = c(A, B(A)),
+    c2 = c(B(A), A)
+)
+## I like to separately store the color palette for the plot
+pal = c(B1 = "dodgerblue4", B2 = "firebrick3")
+## Now we can plot the functions; this sets up the ggplot:
+ggplot(data = d, mapping = aes(x = c1, y = c2, color = B)) +
+    ## This adds the lines:
+    geom_line(linewidth = 1) +
+    ## This adds their point of intersention:
+    geom_point(aes(x = 1/3, y = 1/3), color = "#6e3a58", size = 3) +
+    ## These place the labels:
+    geom_text(
+        aes(x = 0.8, y = 0.25),
+        label = "B[2](c[1])", parse = TRUE,
+        color = pal["B2"], fontface = "bold"
+    ) +
+    geom_text(
+        aes(y = 0.8, x = 0.25),
+        label = "B[1](c[2])", parse = TRUE,
+        color = pal["B1"], fontface = "bold"
+    ) +
+    ## These make the axes a little nicer
+    scale_x_continuous(
+        breaks = c(0, 1/3, 1/2, 1),
+        labels = c(0, "w/3", "w/2", "w"), limits = c(0, 1)
+    ) +
+    scale_y_continuous(
+        breaks = c(0, 1/3, 1/2, 1),
+        labels = c(0, "w/3", "w/2", "w"), limits = c(0, 1)
+    ) +
+    ## This sets the lines to be the colors I defined earlier:
+    scale_color_manual(values = pal) +
+    ## And these make the plot theme a little nicer:
+    theme_classic() +
+    theme(legend.position = "none")
+```
+
+If the best response functions are mostly constant, but just with a "kink" up/downward or left/rightward at one point, it may be easier to just hard-code the change points.
+Here's an example from the "Bach or Stravinski" game we went over in class:
+
+```{r bach-or-stravinski-example, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center", make_smaller = TRUE}
+d = data.frame(
+    p = c(0, 2/3, 2/3, 1, 0,   0,   1, 1),
+    q = c(0,   0,   1, 1, 0, 1/3, 1/3, 1),
+    Label = c(rep("BR2", 4), rep("BR1", 4))
+)
+e = data.frame(
+    p = c(0, 2/3, 1),
+    q = c(0, 1/3, 1),
+    Label = "NE"
+)
+pal = c(BR1 = "dodgerblue4", BR2 = "firebrick3", NE = "maroon4")
+ggplot(data = d, mapping = aes(x = p, y = q, color = Label)) +
+    geom_line(linewidth = 1) +
+    geom_point(data = e, size = 3) +
+    geom_text(
+        mapping = aes(x = 0.2, y = 0.4, label = "BR[1](q)"),
+        color = "dodgerblue4", parse = TRUE
+    ) +
+    geom_text(
+        mapping = aes(x = 0.5, y = 0.8, label = "BR[2](p)"),
+        color = "firebrick3", parse = TRUE
+    ) +
+    scale_color_manual(values = pal) +
+    theme_bw() +
+    theme(legend.position = "none")
+```
+
+Finally, sometimes you need to plot some shaded areas.
+Here's an example of how to do that using `geom_polygon()` from our Hotelling-Downs voting model class example:
+
+```{r hotelling-downs-example, out.width = "70%", fig.width = 3, fig.height = 3, fig.align = "center", make_smaller = TRUE}
+## Define the "open-circle" points at the corners
+dots = data.frame(x1 = c(0, 0, 1, 1), x2 = c(0, 1, 0, 1))
+## Define the edges of each candidate's best response function
+segs = data.frame(x1 = c(0, 0), x2 = c(0, 1), x11 = c(1, 1), x21 = c(0, 1))
+seg2 = data.frame(x2 = c(0, 0), x1 = c(0, 1), x21 = c(1, 1), x11 = c(0, 1))
+## Define the shaded areas of each candidate's best response function
+shp1 = data.frame(x1 = c(0, 0.5, 1), x2 = c(1, 0.5, 1))
+shp2 = data.frame(x1 = c(0, 0.5, 1), x2 = c(0, 0.5, 0))
+shp3 = data.frame(x2 = c(0, 0.5, 1), x1 = c(1, 0.5, 1))
+shp4 = data.frame(x2 = c(0, 0.5, 1), x1 = c(0, 0.5, 0))
+## Start the plot
+ggplot(data = dots, mapping = aes(x = x1, y = x2)) +
+    ## I like to shade in the polygons first
+    geom_polygon(data = shp1, fill = "dodgerblue4", alpha = 1/2) +
+    geom_polygon(data = shp2, fill = "dodgerblue4", alpha = 1/2) +
+    geom_polygon(data = shp3, fill = "firebrick3",  alpha = 1/2) +
+    geom_polygon(data = shp4, fill = "firebrick3",  alpha = 1/2) +
+    ## This labels the best response functions
+    geom_text(
+        aes(x = 0.5, y = 0.75),
+        label = "B[1](x[2])", parse = TRUE,
+        color = "dodgerblue4", fontface = "bold"
+    ) +
+    geom_text(
+        aes(y = 0.5, x = 0.75),
+        label = "B[2](x[1])", parse = TRUE,
+        color = "firebrick3", fontface = "bold"
+    ) +
+    ## This adds a purple dot for the Nash equilibrium
+    geom_point(aes(x = 0.5, y = 0.5), shape = 19, color = "maroon4", size = 2) +
+    ## These draw the edges of the candidates' best response functions
+    geom_segment(
+        mapping = aes(xend = x11, yend = x21), data = segs,
+        color = "dodgerblue4", linewidth = 1
+    ) +
+    geom_segment(
+        mapping = aes(xend = x11, yend = x21), data = seg2,
+        color = "firebrick3", linewidth = 1
+    ) +
+    ## This adds the open circles at the corners
+    geom_point(shape = 21, color = "maroon4", fill = "white", size = 2) +
+    ## These make the axes and theme nicer
+    scale_x_continuous(breaks = 0.5, labels = "m") +
+    scale_y_continuous(breaks = 0.5, labels = "m") +
+    theme_classic()
+```
