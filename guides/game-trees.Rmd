@@ -1,0 +1,270 @@
+---
+title: "Tips on Producing Game Trees for GOV 385N"
+author: "Instructor: JBrandon Duck-Mayr"
+fontsize: 12pt
+urlcolor: Blue
+header-includes:
+    - \usepackage{graphicx}
+    - \definecolor{Blue}{HTML}{005F86}
+    - \usepackage{tikz}
+    - \usetikzlibrary{backgrounds, calc}
+output:
+    quack::article:
+        highlight: kate
+---
+
+# Introduction
+
+I use a LaTeX package called [TikZ](https://ctan.org/pkg/pgf?lang=en) to create game trees (and some various other types of graphics such as Bayesian plate diagrams).
+It is a very powerful graphic creation tool, but also very complex.
+If you use LaTeX or R Markdown to typeset your homework, a brief TikZ tutorial focused on game trees will help you create these graphics for your problem sets, though you are more than welcome to use any other program to create them, such as [Inkscape](https://inkscape.org/).
+If you would like or need additional information about TikZ, here are some additional resources:
+
+- Overleaf has some [beginner-friendly posts on TikZ](https://www.overleaf.com/learn/latex/TikZ_package)
+- If you can't figure out how to do something in TikZ, someone else has probably already had to figure it out before you, and you can find the answer on <http://tex.stackexchange.com>
+- Of course, you can always go to the very extensive documentation (1300+ pages!) [here](https://mirror2.sandyriver.net/pub/ctan/graphics/pgf/base/doc/pgfmanual.pdf) if you can't find answers anywhere else. I have had to do that before, but I wouldn't start there.
+- Let me know if you have any questions.
+
+# Setup
+
+So first things first, you need to include the TikZ package, as well as some "TikZ libraries" that define additional helpful macros to make your job easier.
+Include the following in the preamble of your document if you're using LaTeX:
+
+```latex
+\usepackage{tikz}
+\usetikzlibrary{backgrounds, calc}
+```
+
+If you're using R Markdown, include the following in your YAML header:
+
+```yaml
+header-includes:
+    - \usepackage{tikz}
+    - \usetikzlibrary{backgrounds, calc}
+```
+
+# Drawing trees
+
+Including the TikZ package allows you to draw a `tikzpicture`.
+It will often be most appropriate, though not technically necessary, to put TikZ pictures in a figure; the examples I demonstrate below do this.
+Now I'm going to explain *how* to draw trees, but it probably won't make sense until you see it all come together in an example---that's okay.
+Just read through the "how" part here, then look at the examples, then come back to this section again.
+
+You put the code for the TikZ picture in a `tikzpicture` environment; i.e., between `\begin{tikzpicture}` and `\end{tikzpicture}` tags.
+To draw a node of a game tree, you use the `\node{}` command for the root of the tree and `node{}` (without the slash) for child nodes.
+**Note**: If a command starts with a slash, you have to put a semicolon after it (and if it doesn't, you do not put a semicolon after it); you'll see what I mean in the examples below.
+Child nodes are also encapsulated in `child{}`.
+**Note**: Everything about that child, including its own children if it has any, has to all be within the curly braces.
+When I have nested child nodes, I like to use indenting and new lines to make it easier to see which nodes are at which level (and belong to which parents).
+So you could have something like
+
+```latex
+\node {}                 %% This is the root node
+    child { node {} }    %% This is a child node
+    child { node {}      %% This is another child node
+        child{ node {} } %% This is a grandchild node
+        child{ node {} } %% This is another grandchild node
+    }
+    ;
+```
+
+You can specify the following options for nodes:
+
+```latex
+\node (label) [style options] at (coordinate) {displayed label};
+```
+
+You do not need to provide a `(label)` for nodes, but sometimes it's useful if you want to refer to it later in your `tikzpicture` code.
+You also don't need to specify `(coordinates)` if you don't want to (I usually don't), but it can help you scale the overall picture if you don't like TikZ's automatically chosen options.
+Finally, you don't have to specify `[style options]`, but it can be useful if you want an additional displayed label, such as drawing a circle where the node is but drawing a text label above or to the side of the node circle.
+
+You can also specify how the path from a parent node to a child node looks using code like the following:
+
+```latex
+edge from parent node [edge label style options] {displayed edge label}
+```
+
+(Otherwise a simple line segment will be drawn from the parent node to the child node).
+The `[edge label style options]` can be used to set things like which side of the edge the edge label will be on.
+If the child has its own children, be sure to put the edge specification **last** (after its own children), like so:
+
+\newpage
+
+```latex
+\node {}                 %% This is the root node
+    child { node {} }    %% This is a child node
+    child { node {}      %% This is another child node
+        child{ node {} } %% This is a grandchild node
+        child{ node {} } %% This is another grandchild node
+        %% NOW we can customize the edge from the child to the root node
+        edge from parent node [right] {Label}
+    }
+    ;
+```
+
+Lastly, you can specify "styles" to make complex formatting easier.
+I recommend using the following styles for hollow nodes (like the root node) and solid nodes:
+
+```latex
+\tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black]
+\tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+```
+
+You can even use styles to specify things like how far apart nodes should be:
+
+```latex
+\tikzstyle{level 1}=[level distance = 20mm, sibling distance = 5cm]
+\tikzstyle{level 2}=[level distance = 20mm, sibling distance = 3cm]
+```
+
+\newpage
+
+# Examples
+
+Let's take a look at a simple example (compare this to Figure 156.1 in Osborne):
+
+```latex
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+    %% Set the "styles" as described above
+    \tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black]
+    \tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+    %% You can even use styles to specify how far apart nodes should be
+    \tikzstyle{level 1}=[level distance = 20mm, sibling distance = 5cm]
+    \tikzstyle{level 2}=[level distance = 20mm, sibling distance = 3cm]
+    %% This is the root node
+    \node (0) [hollow node, label = above:{Challenger}] {}
+        %% This is the first (left-most) child node
+        child{ node (1) [solid node, label = above left:{Incumbent}] {}
+            %% It has its own children
+            child{ node {$2, 1$} edge from parent node [left] {$Acquiesce$} }
+            child{ node {$0, 0$} edge from parent node [right] {$Fight$} }
+            %% This specifies the edge from node (1) to node (0)
+            edge from parent node [above left] {$In$}
+        }
+        %% This is the right-most child node of the root node, or node (0)
+        child{ node {$1, 2$} edge from parent node [above right] {$Out$} }
+        %% Notice this semicolon, it's important! Every TikZ command starting
+        %% with a slash like \node must end with a semicolon!
+        ;
+\end{tikzpicture}
+\caption{A reproduction of Figure 156.1 from Osborne, depicting an entry game.}
+\end{figure}
+```
+
+```{=latex}
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+    %% Set the "styles" as described above
+    \tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black]
+    \tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+    %% You can even use styles to specify how far apart nodes should be
+    \tikzstyle{level 1}=[level distance = 20mm, sibling distance = 5cm]
+    \tikzstyle{level 2}=[level distance = 20mm, sibling distance = 3cm]
+    %% This is the root node
+    \node (0) [hollow node, label = above:{Challenger}] {}
+        %% This is the first (left-most) child node
+        child{ node (1) [solid node, label = above left:{Incumbent}] {}
+            %% It has its own children
+            child{ node {$2, 1$} edge from parent node [left] {$Acquiesce$} }
+            child{ node {$0, 0$} edge from parent node [right] {$Fight$} }
+            %% This specifies the edge from node (1) to node (0)
+            edge from parent node [above left] {$In$}
+        }
+        %% This is the right-most child node of the root node, or node (0)
+        child{ node {$1, 2$} edge from parent node [above right] {$Out$} }
+        ;
+\end{tikzpicture}
+\caption{A reproduction of Figure 156.1 from Osborne, depicting an entry game.}
+\end{figure}
+```
+
+\newpage
+
+When a player has a continuous action, one way we can illustrate that is with shading.
+In TikZ, we can do that using something called a "background layer" and the `\fill` command.
+For example, if we wanted to create a shaded triangle below a node labeled `(0)` with a node labeled `(1)` on its bottom edge, we could do the following:
+
+```latex
+%% Setup the background layer that we'll draw shading on
+\begin{scope}[on background layer]
+%% Draw a filled in triangle; the vertices will be the southern-most
+%% point on the (0) node, 2 cm left of the (1) node, and 2 cm right
+%% of the (1) node; we close it all off with cycle and a semicolon
+\fill [gray!30] (0.south)--($(1)+(2cm,0)$)--($(1)-(2cm,0)$)--cycle;
+%% Tell LaTeX we're done doing things with the background layer
+\end{scope}
+```
+
+Here's an example of that (compare this to Figure 182.1 in Osborne):
+
+\newpage
+
+```latex
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+    %% Set the "styles" as described above
+    \tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black]
+    \tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+    %% You can even use styles to specify how far apart nodes should be
+    \tikzstyle{level 1}=[level distance = 20mm, sibling distance = 5cm]
+    \tikzstyle{level 2}=[level distance = 20mm, sibling distance = 3cm]
+    %% This is the root node
+    \node (0) [hollow node, label = above:{1}] {}
+        %% This is the child node
+        child{ node (1) [solid node, label = above left:{2}] {}
+            %% It has its own children
+            child{ node {$c-x, x$} edge from parent node [above left] {$Y$} }
+            child{ node {$0, 0$} edge from parent node [above right] {$N$} }
+            %% This specifies the edge from node (1) to node (0)
+            edge from parent node [right] {$x$}
+        }
+        ;
+    %% Setup the background layer that we'll draw shading on
+    \begin{scope}[on background layer]
+    %% Draw a filled in triangle; the vertices will be the southern-most
+    %% point on the (0) node, 2 cm left of the (1) node, and 2 cm right
+    %% of the (1) node; we close it all off with cycle and a semicolon
+    \fill [gray!30] (0.south)--($(1)+(2cm,0)$)--($(1)-(2cm,0)$)--cycle;
+    %% Tell LaTeX we're done doing things with the background layer
+    \end{scope}
+\end{tikzpicture}
+\caption{Adaptation of Figure 182.1 from Osborne, depicting an ultimatum game.}
+\end{figure}
+```
+
+```{=latex}
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+    %% Set the "styles" as described above
+    \tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black]
+    \tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+    %% You can even use styles to specify how far apart nodes should be
+    \tikzstyle{level 1}=[level distance = 20mm, sibling distance = 5cm]
+    \tikzstyle{level 2}=[level distance = 20mm, sibling distance = 3cm]
+    %% This is the root node
+    \node (0) [hollow node, label = above:{1}] {}
+        %% This is the child node
+        child{ node (1) [solid node, label = above left:{2}] {}
+            %% It has its own children
+            child{ node {$c-x, x$} edge from parent node [above left] {$Y$} }
+            child{ node {$0, 0$} edge from parent node [above right] {$N$} }
+            %% This specifies the edge from node (1) to node (0)
+            edge from parent node [right] {$x$}
+        }
+        ;
+    \begin{scope}[on background layer]
+    \fill [gray!30] (0.south)--($(1)+(2cm,0)$)--($(1)-(2cm,0)$)--cycle;
+    \end{scope}
+\end{tikzpicture}
+\caption{Adaptation of Figure 182.1 from Osborne, depicting an ultimatum game.}
+\end{figure}
+```
+
+\newpage
+
+Again, feel free to reach out to me if any of this doesn't make sense or if you need more help with TikZ, or with setting up game trees using some other method.
