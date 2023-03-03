@@ -1,0 +1,101 @@
+---
+title: "GOV 385N Problem Set 5"
+author: "Instructor: JBrandon Duck-Mayr"
+fontsize: 12pt
+header-includes:
+    - \usepackage{multirow}
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+output: quack::article
+---
+
+<!--
+
+# Not-So-Grim Trigger (Tadelis Exercise 10.3)[^1]
+
+Consider the infinitely repeated Prisoner's Dilemma with discount factor $\delta < 1$ described by the following matrix:
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llcc}
+& & \multicolumn{2}{c}{Player 2} \\[0.5em]
+& & $C$ & $D$ \\
+\cline{3-4} \\[-1.3em]
+\multirow{2}{*}{Player 1} & $C$ & \multicolumn{1}{|c|}{$4, 4$} & \multicolumn{1}{c|}{$-1, 5$} \\
+\cline{3-4} \\[-1.3em]
+& $D$ & \multicolumn{1}{|c|}{$5, -1$} & \multicolumn{1}{c|}{$1, 1$} \\
+\cline{3-4}
+\end{tabular}
+\end{table}
+
+Instead of using grim-trigger strategies to support a pair of actions $(a_1, a_2)$ other than $(D, D)$ as a subgame-perfect equilibrium, assume that the players wish to choose a less draconian punishment called a "length-$T$ punishment" strategy.
+If there is a deviation from $(a_1, a_2)$ then the players will play $(D, D)$ for $T$ periods and then resume playing $(a_1, a_2)$.
+Let $\delta_T$ be the critical discount factor so that if $\delta > \delta_T$ then the adequately defined strategies will implement the desired path of play with length-$T$ punishment as the threat.
+
+a. Let $T = 1$. What is the critical value $\delta_1$ to support the pair of actions $(C, C)$ played in every period?
+b. Let $T = 2$. What is the critical value $\delta_2$ to support the pair of actions $(C, C)$ played in every period?[^2]
+c. Compare the two critical values in (a) and (b). How do they differ and what is the intuition for this?
+
+[^1]: Lightly edited.
+
+[^2]: Hint: You should encounter an equation of the form
+      $a\delta^3 - (a + 1)\delta + 1 = 0$, for which it is easy to see that
+      $\delta = 1$ is a root. The equation can also be written in the form
+      $(\delta - 1) (a\delta^2 + a\delta - 1) = 0$ which will make it easier
+      to solve for the other relevant root of the equation.
+
+-->
+
+For the problems below, refer to the following generalized form of the Prisoner's Dilemma (see Figure 429.1 in Osborne):
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llcc}
+& & \multicolumn{2}{c}{Player 2} \\[0.5em]
+& & $C$ & $D$ \\
+\cline{3-4} \\[-1.3em]
+\multirow{2}{*}{Player 1} & $C$ & \multicolumn{1}{|c|}{$x, x$} & \multicolumn{1}{c|}{$0, y$} \\
+\cline{3-4} \\[-1.3em]
+& $D$ & \multicolumn{1}{|c|}{$y, 0$} & \multicolumn{1}{c|}{$1, 1$} \\
+\cline{3-4}
+\end{tabular}
+\end{table}
+
+where $1 < x < y$.
+
+# Osborne Exercise 429.1
+
+Find the condition on the discount factor $\delta$ under which the strategy pair in which each player uses the grim trigger strategy is a Nash equilibrium of the infinitely repeated Prisoner's Dilemma with payoffs given above.
+
+# Osborne Exercise 431.1
+
+Find condidtions on $x$, $y$, and the discount factor $\delta$ under which the strategy pair in which each player uses tit-for-tat is a Nash equilibrium of the infinitely repeated game of the Prisoner's Dilemma with payoffs given above.
+Show, in particular, that if $y \geq 2x$, then the strategy pair is not a Nash equilibrium for any value of $\delta < 1$.
+
+# Adjusted Tit-for-tat[^3]
+
+For an infinitely repeated game of the Prisoner's Dilemma with payoffs given above, define the following "Adjusted Tit for Tat" (ATFT) strategy:
+
+- For each player, the strategy defines actions in, and movements between, three "states": **Coop** (mutual cooperation), **Pun** (punish the opponent's deviation), and **Apol** (apologize for own deviation). A player begins the game in state **Coop**
+- In state **Coop**, a player is to play $C$; in state **Pun**, a player is to play $D$; in state **Apol**, a player is to play $C$
+- Following a pair of actions in state **Coop**,
+  + the player moves to state **Pun** if she played $C$ while her opponent played $D$;
+  + the player moves to state **Apol** if she played $D$ while her opponent played $C$;
+  + otherwise the player remains in state **Coop**
+- Following a pair of actions in state **Pun**
+  + the player moves to state **Coop** if her opponent played $C$, regardless of her own action
+  + otherwise, the player remains in state **Pun**
+- Following a pair of actions in state **Apol**
+  + the player moves to state **Coop** if she played $C$, regardless of her opponent's action
+  + otherwise, the player remains in state **Apol**
+
+\vspace*{2\baselineskip}
+
+a. Use the description of ATFT above to construct a strategy diagram in the style of Figure 427.2 (sometimes called an "automoton diagram").
+b. Suppose the underlying PD game has the payoffs shown above, with discount factor $\delta$.
+   Derive the conditions on $x$, $y$, and $\delta$ under which (ATFT, ATFT) is a subgame perfect equilibrium profile.
+   Hint: Rather than "history ending in $(C,D)$," etc., use the possible pairs of player states (**Apol**, **Pun**, and **Coop**) as the situations in which to define possible deviations by a player from ATFT.
+   Assume that the player's opponent will always do what ATFT prescribes in all three states, and show that no single deviation by the player can produce a higher payoff than adhering to ATFT.
+
+[^3]: I believe this is a Randy Calvert original.
