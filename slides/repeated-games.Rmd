@@ -1,0 +1,190 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Repeated Games"
+author: "JBrandon Duck-Mayr"
+date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+## Motivation
+
+. . .
+
+\begin{table}
+\centering
+\begin{tabular}{lcc}
+& C & D \\
+C & \textcolor<3, 7>{BurntOrange}{\textbf<3, 7>{2, 2}} & 0, 3 \\
+D & 3,0 & \textcolor<3, 7>{Blue}{\textbf<3, 7>{1, 1}}
+\end{tabular}
+\end{table}
+
+\vspace*{\baselineskip}
+
+. . .
+
+. . .
+
+- Incentives can be impacted by *repeated play*
+- Example: If someone burns you on a group project, will you want to work with them in the future?
+- Example: Lawyer knows they will argue before the same judge in the future, have to stay credible
+- Maybe more satisfying equilibria can result from repeated play
+
+## Discounting
+
+- We assume players care less about payoffs from future periods than today's payoff
+  + This could be due to impatience
+  + Could be due to probabilistic end to play
+- We represent this by a **discount factor** $\delta \in (0, 1)$
+  + If player $i$'s non-discounted payoff is $u_i(a^t)$, their payoff in a $T$-period repeated game is $$ u_i(a^1) + \delta u_i(a^2) + \delta^2 u_i(a^3) + \dots + \delta^{T-1} u_i(a^T) = \sum_{t = 1}^T \delta^{t-1} u_i(a^t). $$
+  + As $\delta \to 0$, player is more impatient/myopic
+
+## Discounted average
+
+- Consider a stream of payoffs $(v^1, v^2, \dots) = \sum_{t = 1}^\infty \delta^{t-1} v^t \equiv V$
+- No matter what it is, there exists a constant $c$ such that $i$ is indifferent between $(v^1, v^2, \dots)$ and $(c, c, \dots)$
+- Since $\sum_{t = 1}^\infty \delta^{t-1}c = \frac{c}{1 - \delta}$, then $c = (1 - \delta) V$
+- We call $(1 - \delta) \sum_{t = 1}^\infty \delta^{t-1} v^t$ the **discounted average**
+
+## Repeated game definition
+
+::: {.block}
+### Osborne Definition 424.1
+Let $G$ be a strategic game.
+Denote the set of players by $N$ and the set of actions and payoff function of each player $i$ by $A_i$ and $u_i$ respectively.
+The $T$-**period repeated game of** $G$ for the discount factor $\delta$ is the extensive game with perfect information and simultaneous moves in which
+
+- The set of players is $N$
+- the set of terminal histories is the set of sequences $(a^1, a^2, \dots, a^T)$ of action profiles in $G$
+- the player function assigns the set of all players to every history...
+- the set of actions available to any player $i$ after any history is $A_i$
+- each player $i$ evaluates each terminal history $(a^1, \dots, a^T)$ according to the discounted average $(1 - \delta) \sum_{t = 1}^T \delta^{t-1} u_i(a^t)$
+:::
+
+## Example: Finitely repeated Prisoner's Dilemma
+
+\begin{table}
+\centering
+\begin{tabular}{lcc}
+& C & D \\
+C & 2, 2 & 0, 3 \\
+D & 3,0 & 1, 1
+\end{tabular}
+\end{table}
+
+\vspace*{\baselineskip}
+
+Can we get the players to play $(C, C)$ in each period of a finitely repeated PD?
+
+## Infinitely repeated games
+
+::: {.block}
+### Osborne Definition 424.1 (continued)
+The **infinitely repeated game of** $G$ for the discount factor $\delta$ differs only in that the set of terminal histories is the set of infinite sequences $(a^1, a^2, \dots)$ and the payoff of each player $i$ to the terminal history $(a^1, a^2, \dots)$ is the discounted average $(1 - \delta) \sum_{t = 1}^\infty \delta^{t-1} u_i(a^t)$.
+:::
+
+. . .
+
+- Need not assume game is *actually* infinitely repeated, models any time players think of repetition as indefinite
+
+## SPNE of infinitely repeated games
+
+- How can we do backward induction if there's no final subgame??
+- Instead find SPNE by ensuring it satisfies the **one-shot deviation principle**, or the property that "no player can increase her payoff by changing her action at the start of any subgame in which she is the first-mover, *given* the other player's strategies *and* the rest of her own strategy" (Osborne, 438)
+
+## Properties of infinite sequences
+
+- A sum of a sequence of numbers of the form $a + ar + ar^2 + \dots$ is called a **geometric series**
+- When $|r| < 1$, there is a very useful result: $$ a + ar + ar^2 + \dots = \frac{a}{1 - r} $$
+
+## Infinitely repeated PD: Grim trigger
+
+\only<2>{
+The \textbf{grim trigger strategy} in an infinitely repeated Prisoner's Dilemma is $s_i\left(\varnothing\right) = C$ and $$ s(a^1, \dots, a^t) = \begin{cases} C & \text{ if } (a_j^1, \dots, a_j^t) = (C, \dots, C) \\ D & \text{ otherwise,}\end{cases} $$ for every history $(a_j^1, \dots, a_j^t)$, where $j$ is the other player
+}
+
+\only<3>{
+We can also represent this with an \textbf{automaton diagram} (See Osborne Figure 427.1):
+
+\begin{figure}
+\caption{Automaton diagram of the Grim Trigger strategy}
+\centering
+\tikzstyle{block} = [rectangle, draw, fill=white, text width=5em, text centered, minimum height=2em]
+\tikzstyle{start} = [rectangle, fill=white, text width=5em, draw, very thick, text centered, minimum height=2em]
+\tikzstyle{line} = [draw, -latex']
+\begin{tikzpicture}[node distance = 4cm, auto]
+    % Place nodes
+    \node [start] (coop) {$\mathcal{C}$: $C$};
+    \node [block, right of=coop] (pun) {$\mathcal{D}$: $D$};
+    
+    % Draw edges
+    \path [line] (coop) -- node [below] {$(\cdot, D)$} (pun);
+\end{tikzpicture}
+\end{figure}
+}
+
+\only<4->{
+\begin{itemize}
+\tightlist
+\item<4-> What's the discounted payoff if both players play Grim Trigger?
+\item<5-> What if we enter state $\mathcal{D}$---what's the discounted payoff then?
+\item<6-> So is it profitable for any player to deviate once?
+\end{itemize}
+}
+
+## Infinitely repeated PD: Limited punishment
+
+. . .
+
+\begin{figure}
+\tiny
+\caption{Automaton diagram of 3 period punishment strategy}
+\centering
+\tikzstyle{block} = [rectangle, draw, fill=white, text width=5em, text centered, minimum height=2em]
+\tikzstyle{start} = [rectangle, fill=white, text width=5em, draw, very thick, text centered, minimum height=2em]
+\tikzstyle{line} = [draw, -latex']
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [start] (coop) {$P_0$: $C$};
+    \node [block, right of=coop] (pun1) {$P_1$: $D$};
+    \node [block, right of=pun1] (pun2) {$P_2$: $D$};
+    \node [block, right of=pun2] (pun3) {$P_3$: $D$};
+    
+    % Draw edges
+    \path [line] (coop) -- node [below] {$(\cdot, D)$} (pun1);
+    \path [line] (pun1) -- node [below] {$(\cdot, \cdot)$} (pun2);
+    \path [line] (pun2) -- node [below] {$(\cdot, \cdot)$} (pun3);
+    \draw[->] (pun3) to [out=90,in=90] node [above] {$(\cdot, \cdot)$} (coop);
+\end{tikzpicture}
+\end{figure}
+
+## Infinitely repeated PD: Tit-for-tat
+
+. . .
+
+\begin{figure}
+\caption{Automaton diagram of the Tit-for-tat strategy}
+\centering
+\tikzstyle{block} = [rectangle, draw, fill=white, text width=5em, text centered, minimum height=2em]
+\tikzstyle{start} = [rectangle, fill=white, text width=5em, draw, very thick, text centered, minimum height=2em]
+\tikzstyle{line} = [draw, -latex']
+\begin{tikzpicture}[node distance = 4cm, auto]
+    % Place nodes
+    \node [start] (coop) {$\mathcal{C}$: $C$};
+    \node [block, right of=coop] (pun) {$\mathcal{D}$: $D$};
+    
+    % Draw edges
+    \path [line] (coop) -- node [below] {$(\cdot, D)$} (pun);
+    \draw[->] (pun) to [out=90,in=90] node [above] {$(\cdot, C)$} (coop);
+\end{tikzpicture}
+\end{figure}
