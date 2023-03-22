@@ -1,0 +1,38 @@
+---
+title: "GOV 385N Problem Set 6"
+author: "Instructor: JBrandon Duck-Mayr"
+fontsize: 12pt
+header-includes:
+    - \usepackage{multirow}
+    - \newcommand{\setsep}{\setlength{\itemsep}{1pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{1pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+output: quack::article
+---
+
+# Adverse Selection (Osborne 282.3)
+
+Firm A (the "acquirer") is considering taking over firm T (the "target").
+It does not know firm T's value; it believes that this value, when firm T is controlled by its own management, is at least \$0 and at most \$100 and assigns equal probability to each of the 101 dollar values in this range.
+Firm T will be worth 50% more under firm A's management than it is under its own management.
+Suppose that firm A bids $y$ to take over firm T, and firm T is worth $x$ under its own management.
+Then if T accepts A's offer, A's payoff is $\frac{3}{2} x - y$ and T's payoff is $y$; if T rejects A's offer, A's payoff is 0 and T's payoff is $x$.
+
+a. Model this situation as a Bayesian game in which firm A chooses how much to offer and firm T decides the lowest offer to accept.
+b. Find the Nash equilibria of this game.
+c. Explain why the logic behind the equilibrium is called *adverse selection*.
+
+# Jury Voting[^1]
+
+Consider a more general version of the jury voting game introduced in lecture.
+
+- There are $n$ jurors ($n$ odd) who must choose to convict or acquit
+- There is an unknown state of the world $\omega \in \{G,I\}$ (guilty or innocent). The jurors' common prior is $\Pr\left( \omega = I \right) = \pi \in (0,1)$.
+- Each juror independently receives a signal $s_i \in \{0, 1\}$; for all jurors $$ \Pr\left( s_i = 1 \mid \omega = G \right) = \Pr\left( s_i = 0 \mid \omega = I \right) = p > 0 $$ (i.e. if we say $s_i = 1$ signals guilt, each signal is correct with probability $p$)
+- After observing the signal, the jurors simultaneously cast votes $a_i \in \{c, a\}$ (convict or acquit)
+- The outcome $x \in \{C, A\}$ is determined by a $q$-majority voting rule: $x = C$ if & only if at least $q$ jurors choose $a_i = c$, where $\frac{n+1}{2} \leq q \leq n$ (i.e. from simple majority rule to unanimity); otherwise the defendant is acquitted.
+- All jurors' preferences are given as follows: $u(A, I) = u(C, G) = 0$, $u(C, I) = -\pi$, and $u(A, G) = -(1 - \pi)$ where $\pi \in (0, 1)$
+
+Characterize the Bayesian Nash equilibrium of this game as a function of $n$, $q$ and $p$. Discuss the effects of the number of jurors, the voting rule, and the accuracy of signals.
+
+[^1]: I believe this problem was originally written by Keith Schnakenberg (I lightly edited it).
