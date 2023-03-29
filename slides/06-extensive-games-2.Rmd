@@ -1,0 +1,164 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Extensive Games of Perfect Information"
+author: "JBrandon Duck-Mayr"
+date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+    - \newcommand{\pd}[1]{\ensuremath{\frac{\partial}{\partial{#1}}}}
+    - \newcommand{\gray}{\color{white}}
+    - \usepackage{tikz}
+    - \usetikzlibrary{backgrounds, calc}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+## Moves by nature/chance
+
+- Strictly speaking, no chance moves in perfect info games
+- But the solution concept's the same, so we lump it in together
+- So we extend extensive games of perfect information by \vspace{0.25em}
+  + letting the player function assign "Chance" to some histories,
+  + specifying the probabilities Chance uses, and
+  + defining the players' preferences over the set of lotteries over terminal histories
+- (Some people call it "Chance", some call it "Nature")
+- Outcome of a strategy profile is now probability distribution over terminal histories
+
+## Moves by Chance: Example
+
+\only<1>{
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black]
+    \tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+    \tikzstyle{level 1}=[level distance = 20mm, sibling distance = 3cm]
+    \tikzstyle{level 2}=[level distance = 20mm, sibling distance = 3cm]
+    \node (root) [hollow node, label = above:{1}] {}
+        child{ node {1, 1} edge from parent node [above left] {$A$} }
+        child{ node [solid node, label = above right:{Chance}] {}
+            child{ node {3, 0} edge from parent node [above left] {$0.5$} }
+            child{ node [solid node, label = above right:{2}] {} 
+                child{ node{0, 1} edge from parent node [above left] {$C$} }
+                child{ node{1, 0} edge from parent node [above right] {$D$} }
+                edge from parent node [above right] {$0.5$}
+            }
+            edge from parent node [above right] {$B$}
+        }
+        ;
+\end{tikzpicture}
+\end{figure}
+}
+
+\only<2>{
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+        emph/.style={edge from parent/.style={BurntOrange, very thick, draw}},
+        norm/.style={edge from parent/.style={black, thin, draw}}
+    ]
+    \tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black]
+    \tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+    \tikzstyle{level 1}=[level distance = 20mm, sibling distance = 3cm]
+    \tikzstyle{level 2}=[level distance = 20mm, sibling distance = 3cm]
+    \node (root) [hollow node, label = above:{1}] {}
+        child{ node {1, 1} edge from parent node [above left] {$A$} }
+        child{ node [solid node, label = above right:{Chance}] {}
+            child{ node {3, 0} edge from parent node [above left] {$0.5$} }
+            child{ node [solid node, label = above right:{2}] {} 
+                child[emph] { node{\textcolor{BurntOrange}{\textbf{0, 1}}} edge from parent node [above left] {\textcolor{BurntOrange}{$\mathbf{C}$}} }
+                child{ node{1, 0} edge from parent node [above right] {$D$} }
+                edge from parent node [above right] {$0.5$}
+            }
+            edge from parent node [above right] {$B$}
+        }
+        ;
+\end{tikzpicture}
+\end{figure}
+}
+
+\only<3-7>{
+\begin{itemize}
+\tightlist
+\item<3-> Now what do we do?
+\item<4-> We know Player 1 gets 1 for certain if they choose $A$
+\item<5-> What about if they choose $B$?
+\item<6-> Calculate the \textbf{expected} utility of choosing $B$
+\item<7> $EU(B) = 0.5 \times 0 + 0.5 \times 3 = 1.5$ vs $EU(A) = 1$
+\end{itemize}
+}
+
+\only<8>{
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+        emph/.style={edge from parent/.style={BurntOrange, very thick, draw}},
+        norm/.style={edge from parent/.style={black, thin, draw}}
+    ]
+    \tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black, color = black]
+    \tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+    \tikzstyle{level 1}=[level distance = 20mm, sibling distance = 3cm]
+    \tikzstyle{level 2}=[level distance = 20mm, sibling distance = 3cm]
+    \node (root) [hollow node, label = above:{1}] {}
+        child{ node {1, 1} edge from parent node [above left] {$A$} }
+        child[emph] { node [solid node, label = above right:{Chance}] {}
+            child[norm] { node {3, 0} edge from parent node [above left] {$0.5$} }
+            child[norm] { node (problem) [solid node, label = above right:{2}] {} 
+                child[emph] { node{\textcolor{BurntOrange}{\textbf{0, 1}}} edge from parent node [above left] {\textcolor{BurntOrange}{$\mathbf{C}$}} }
+                child[norm] { node{1, 0} edge from parent node [above right] {$D$} }
+                edge from parent node [above right] {$0.5$}
+            }
+            edge from parent node [above right] {\textcolor{BurntOrange}{$\mathbf{B}$}}
+        }
+        ;
+\end{tikzpicture}
+\end{figure}
+}
+
+## Firm-union bargaining (Osborne 227.2)
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black]
+    \tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+    \tikzstyle{level 1}=[level distance = 20mm, sibling distance = 3cm]
+    \tikzstyle{level 2}=[level distance = 20mm, sibling distance = 5cm]
+    \tikzstyle{level 3}=[level distance = 20mm, sibling distance = 3cm]
+    \node (root) [hollow node, label = above:{Union}] {}
+        child{ node (chance) [solid node, label = above right:{Chance}] {}
+            child{ node [solid node, label = above left:{Firm}] {}
+                child{ node{$x, H - x$} edge from parent node [above left] {$A$} }
+                child{ node{0, 0} edge from parent node [above right] {$R$} }
+                edge from parent node [above left] {$p$}
+            }
+            child{ node [solid node, label = above right:{Firm}] {} 
+                child{ node{$x, L - x$} edge from parent node [above left] {$A$} }
+                child{ node{0, 0} edge from parent node [above right] {$R$} }
+                edge from parent node [above right] {$1-p$}
+            }
+            edge from parent node [right] {$x$}
+        }
+        ;
+        \begin{scope}[on background layer]
+        \fill [gray!30] (root.south)--($(chance)+(2cm,0)$)--($(chance)-(2cm,0)$)--cycle;
+        \end{scope}
+\end{tikzpicture}
+\end{figure}
+
+<!-- ## Electoral competition under uncertainty -->
+
+<!-- - (Taken from Gelbach's Formal Models of Domestic Politics, exercise 2.4) -->
+<!-- - Suppose the policy space was binary, $x \in \{0, 1\}$ -->
+<!-- - With probability $\gamma \in (0.5, 1)$, the median voter most prefers $x = 0$ -->
+<!-- -  -->
+
