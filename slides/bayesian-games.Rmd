@@ -1,0 +1,191 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Bayesian Games"
+author: "JBrandon Duck-Mayr"
+date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows}
+    - \usepackage{multirow}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+## Motivation
+
+. . .
+
+- What if... (gasp) *I don't know everything*???
+- Examples:
+  + Auctions
+  + Challenger of unknown strength
+
+## Bayesian Games
+
+A Bayesian game consists of
+
+. . .
+
+- a set of players
+- for each player, a set of actions
+- for each player, a **type space** (often denoted $\Theta_i$)
+- for each player, *type-dependent* preferences
+- for each player, **belief** about the other players' types
+  + if we denote player $i$'s beliefs by $\phi_i$,
+  + $\phi_i\left(\theta_{-i}\mid\theta_i\right)$ is $i$'s **posterior** or **conditional** belief on all other players' types ($\theta_{-i}$) given $i$ knows their own type ($\theta_i$)
+
+## Bayes' Rule
+
+\only<1-7>{
+\begin{itemize}
+\tightlist
+\item<1-> So we need to be able to talk about \textbf{conditional probability}
+\begin{itemize}
+\tightlist
+\item<2-> That is, what's the probability of something \textit{given} other information you have?
+\item<3-> Example: Do you think it's more likely to rain after you see dark clouds?
+\end{itemize}
+\item<4-> Compare this to \textbf{unconditional probability}
+\begin{itemize}
+\tightlist
+\item<5-> Example: What's the odds you think it'll rain on any given day?
+\end{itemize}
+\item<6-> We call the unconditional probability of an event your \textbf{prior} belief, and the conditional probability after receiving some information your \textbf{posterior} belief
+\item<7-> Reverend Thomas Bayes defined formulae for calculating posterior probabilities, so we call this a \textit{Bayesian update} and the formula for posterior probability \textit{Bayes' rule}
+\end{itemize}
+}
+
+\only<8>{
+Definition of conditional probability:
+
+$$
+{\color{BurntOrange}\Pr\left(B \mid A\right)} = \frac{\color{Blue}\Pr\left(A \cap B \right)}{\color{Green}\Pr\left(A\right)}
+$$
+
+\begin{table}
+\centering
+\begin{tabular}{cl}
+{\color{BurntOrange}$\Pr\left(B \mid A\right)$} & conditional probability of $B$ given $A$ \\[0.5em]
+{\color{Blue}$\Pr\left(A \cap B \right)$} & joint probability of $A$ and $B$ \\[0.5em]
+{\color{Green}$\Pr\left(A\right)$} & prior or marginal probability of $A$
+\end{tabular}
+\end{table}
+}
+
+\only<9>{
+Intuition behind conditional probability:
+\begin{figure}
+\centering
+\begin{tikzpicture}[fill=gray]
+    \draw[fill = red, draw = black, opacity = 0.25] (0,0) circle [radius = 2];
+    \draw[fill = blue, draw = black, opacity = 0.25] (2,0) circle [radius = 2];
+    \draw (-3, -3) rectangle (5, 3) node [below left] {$U$};
+    \node at (-0.5, 0) [left] {$A$};
+    \node at (2.5, 0) [right] {$B$};
+    \node at (1, 0) {$A \cap B$};
+\end{tikzpicture}
+\end{figure}
+}
+
+\only<10-11>{
+Bayes' rule:
+
+$$
+\Pr\left(B \mid A\right) = \frac{\Pr\left(B\right)\Pr\left(A \mid B\right)}{\Pr\left(A\right)}
+$$
+
+\invisible<10>{
+\vspace*{2em}
+
+Sometimes it's more useful to use this alternate formulation:
+
+$$
+\Pr\left(B \mid A\right) = \frac{\Pr\left(B\right)\Pr\left(A \mid B\right)}{\Pr\left(A \mid B\right) \Pr\left(B\right) + \Pr\left(A \mid \neg B\right) \Pr\left(\neg B\right)}
+$$
+}
+}
+
+## Posterior Belief Example
+
+- Consider a game with two players, each with two types
+  + $\theta_1 \in \{a, b\}, \theta_2 \in \{c, d\}$
+- Suppose Nature selects the players' types according to the following joint probability distribution:
+
+\invisible<1-2>{
+\begin{table}
+\setlength{\extrarowheight}{2pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Player 2}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$c$}  & \multicolumn{1}{c}{$d$} \\\cline{3-4}
+\multirow{2}*{Player 1}  & $a$ & $1/6$ & $1/3$ \\\cline{3-4}
+& $b$ & $1/3$ & $1/6$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+\vspace*{1em}
+}
+
+- If Player 1 is of type $a$, what is their belief about Player 2's type?
+
+## Strategies in Bayesian games
+
+- In a Bayesian game, players must develop a "plan of action" for any type they could be
+- So a pure strategy in a Bayesian game is a function mapping their type space to the player's action set
+  + If we label $i$'s action set $A_i$ and their strategy $s_i$, $s_i : \Theta_i \to A_i$
+
+## Bayesian Nash Equilibrium
+
+. . .
+
+- For equilibrium analysis of Bayesian games, we assume a \textbf{common prior}
+- Then we can derive the players' posterior beliefs about the other players' types
+- Then we can define our solution concept as follows:
+
+. . .
+
+::: {.block}
+### Tadelis Definition 12.4 (lightly edited)
+In a Bayesian game, a strategy profile $s^\ast$ is a **pure-strategy Bayesian Nash equilibrium** if, for every player $i$, for each of player $i$'s types $\theta_i \in \Theta_i$, and for every action $a_i \in A_i$,
+\begin{equation*}
+\begin{split}
+\sum_{\theta_{-i} \in \Theta_{-i}} & \phi_i(\theta_{-i}\mid\theta_i) \, u_i(s_i^\ast(\theta_i), s_{-i}^\ast(\theta_{-i}); \theta_i) \\
+& \geq \sum_{\theta_{-i} \in \Theta_{-i}} \phi_i(\theta_{-i}\mid\theta_i) \, u_i(a_i, s_{-i}^\ast(\theta_{-i}); \theta_i)
+\end{split}
+\end{equation*}
+:::
+
+## Example: Juries
+
+- A 2-person jury must decide if a defendant is guilty
+- Suppose the prior probability they are guilty is $\pi > 1/2$
+- Suppose the jurors preferences are about getting it right
+  + $u_i(A \mid \omega = I) = u_i(C \mid \omega = G) = 1$,
+  + $u_i(A \mid \omega = G) = u_i(C \mid \omega = I) = 0$
+- Each juror independently receives a private signal $\theta_i \in \{0, 1\}$
+  + $\Pr\left( \theta_i = 1 \mid \omega = G \right) = \Pr\left( \theta_i = 0 \mid \omega = I \right) = p > 1/2$
+  + $\Pr\left( \theta_i = 1 \mid \omega = I \right) = \Pr\left( \theta_i = 0 \mid \omega = G \right) = 1 - p < 1/2$
+- What would a juror choose to do if it was all up to them?
+- Is both jurors playing $C$ if $\theta_i = 1$ and $A$ if $\theta_i = 0$ a BNE?
+- Is any other strategy profile a BNE?
+
+\tiny\textcolor{gray}{(Example adapted from Tadelis Section 12.4)}
+
+## Example: A joint venture
+
+- 2 players engage in a joint venture
+- Each player can expend effort ($e_i = 1$) or shirk ($e_i = 0$)
+- If a player puts in effort, they incur a cost $c < 1$
+- If either player expends effort, the venture is a success
+- Each player has a type $\theta_i \in [0, 1]$
+  + The players' types are independently drawn from $U(0, 1)$
+  + The players' types are private knowledge
+- The players value the success of the venture according to their type; its success for each player $i$ is valued at $\theta_i^2$
+- What are the players' best response functions?
+- Is there a BNE where both players play the same strategy?
+
+\tiny\textcolor{gray}{(Example adapted from Tadelis Section 12.2.2)}
