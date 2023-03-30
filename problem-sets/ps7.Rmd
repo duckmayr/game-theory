@@ -1,0 +1,118 @@
+---
+title: "GOV 385N Problem Set 7"
+author: "Instructor: JBrandon Duck-Mayr"
+fontsize: 12pt
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \usepackage{tikz}
+output: quack::article
+---
+
+# Reelection Game
+
+Consider the reelection game represented in the following game tree in which $E$ denotes an extreme policy while $M$ denotes a moderate policy.
+
+\begin{center}
+\begin{tikzpicture}[font=\footnotesize]
+\draw (0,2) -- (0,-2);
+\node at (0,0) {$\bullet$};
+\node[right] at (0,0) {Nature};
+\node[right] at (0,1) {pragmatist with $\frac{1}{4}$};
+\node[right] at (0,-1) {ideologue with $\frac{3}{4}$};
+\draw (-3,2) -- (3,2);
+\draw (-3,-2) -- (3,-2);
+\node at (0,2) {$\bullet$};
+\node at (0,-2) {$\bullet$};
+\node[above] at (-1.5,2) {$E$};
+\node[above] at (1.5,2) {$M$};
+\node[below] at (-1.5,-2) {$E$};
+\node[below] at (1.5,-2) {$M$};
+\node at (-3,2) {$\bullet$};
+\node at (-3,-2) {$\bullet$};
+\node at (3,2) {$\bullet$};
+\node at (3,-2) {$\bullet$};
+\node[left] at (-3,0) {Voter};
+\node[right] at (3,0) {Voter};
+\draw[dashed] (-3,2) -- (-3,-2);
+\draw[dashed] (3,2) -- (3,-2);
+\draw (-4,1)-- (-3,2) -- (-4,3);
+\draw (-4,-1)-- (-3,-2) -- (-4,-3);
+\draw (4,1)-- (3,2) -- (4,3);
+\draw (4,-1)-- (3,-2) -- (4,-3);
+\node[left] at (-3.5, 2.5) {Keep};
+\node[left] at (-3.5, 1.5) {Dismiss};
+\node[left] at (-3.5, -2.5) {Dismiss};
+\node[left] at (-3.5, -1.5) {Keep};
+\node[right] at (3.5, 2.5) {Keep};
+\node[right] at (3.5, 1.5) {Dismiss};
+\node[right] at (3.5, -2.5) {Dismiss};
+\node[right] at (3.5, -1.5) {Keep};
+\node[left] at (-4,3) {0,1};
+\node[left] at (-4,1) {0,0};
+\node[right] at (4,3) {1,1+$b$};
+\node[right] at (4,1) {1,$b$};
+\node[left] at (-4,-3) {1,0};
+\node[left] at (-4,-1) {1+$\delta$,$-1$};
+\node[right] at (4,-3) {0,$b$};
+\node[right] at (4,-1) {$\delta$,$-1+b$};
+\node[above] at (0,2) {Incumbent};
+\node[below] at (0,-2) {Incumbent};
+\end{tikzpicture}
+\end{center}
+
+a. Suppose $\delta = 2$.
+   Does this game have any pure-strategy perfect Bayesian equilibrium?
+   If so, identify one. If not, prove it.
+b. Suppose $\delta = 2$.
+   Identify the mixed-strategy perfect Bayesian equilibrium.
+
+# Drug Ads (Tadelis 16.5)
+
+A pharmaceutical company (player 1) introduces a new cold medicine.
+The medicine may either be highly effective ($H$) or have little effect ($L$).
+The company knows the effectiveness of the drug, but a representative consumer (player 2) knows only that the prior probability that it is highly effective is $0.5$.
+The company can choose either to advertise the drug excessively ($A$), at a cost $c > 0$, or not to advertise ($N$), which costs nothing.
+The representative consumer decides whether or not to buy the product after observing whether the company advertised the drug.
+The net payoff to the representative consumer from buying the drug is $1$ if it is highly effective and $-1$ if it has little effect, and his payoff from not buying the drug is $0$.
+If the drug is highly effective then if consumers buy the drug once they will learn of its efficacy and buy it many more times, in which case the company earns a high payoff equal to $R > c$.
+If instead consumers learn that the drug has little effect then the company will sell the drug to them only once, and the company’s returns are equal to $r > 0$.
+If the representative consumer does not buy the drug then the revenue of the company is $0$.
+Assume that $R > c > r > 0$.
+
+a. Write down the extensive-form game tree.
+b. Find a separating perfect Bayesian equilibrium in which the company chooses a different action depending on the drug's efficacy.
+c. Find a pooling perfect Bayesian equilibrium in which the company chooses the same action regardless of the drug's efficacy.
+d. What changes when $R > r > c > 0$?
+
+\clearpage
+
+# Pandering
+
+There are two periods, 1 and 2.
+In each period there are two possible actions, $a$ and $b$.
+The voter does not know ex ante which action is better.
+The probability that $a$ is the better action is $p > \frac{1}{2}.$
+The assumption that $p > \frac{1}{2}$ means that $a$ is the ex ante more popular action.
+The choice is delegated to an elected official whose preferences are private information.
+With probability $\pi > \frac{1}{2}$ the politician's preferences are congruent with the voter (i.e. the politician prefers $a$ to $b$ if and only if the voter prefers $a$ to $b$).
+With probability $1 - \pi$ the politician is noncongruent, meaning their preferences are diametrically opposed to the voter's preferences (i.e. the politician prefers $a$ if and only if the voter prefers $b$).
+Unlike the voter, the politician knows which action is better for the voter.
+The game is as follows:
+
+1. Nature determines the politician's type as well as which action is better for the voter. Both pieces of information are revealed only to the politician.
+2. The politician chooses a first-period action, either $a$ or $b$. The voter observes this action but not the associated payoff.
+3. The voter chooses whether to retain the politician for the next period or replace the politician with a challenger. 
+4. If the challenger is elected, Nature draws the challenger's type. The challenger is also congruent with probability $\pi$ and noncongruent with probability $1 - \pi.$
+5. The politician in office chooses an action, $a$ or $b$, as in the first period. The game ends and both period's payoffs are revealed.
+
+The voter's payoff in each period is $1$ if the preferred action is taken and $0$ otherwise (their total payoff is the sum over both periods).
+A politician gets a payoff of $R > 0$ for each period in which she holds power and a payoff of $G > 0$ for each period in which their preferred policy is implemented.
+Note that any politician selects their preferred policy in the second period.
+
+Answer the following questions:
+
+a. A \emph{pandering} equilibrium is one in which the politician chooses the more popular action, a, regardless of which policy is better, and the voter retains the incumbent if and only if a was the chosen policy in the first period. When does such an equilibrium exist?
+b. A no-accountability equilibrium is one in which all politicians choose their most preferred action in the first period. When does such an equilibrium exist?
+c. Suppose the voter could delegate this decision to a judge who would not stand for re-election after the first period (the judge is congruent with the same probability as the politician). When would the voter prefer to do so? Does this make you think about accountability any different than before doing this problem?
