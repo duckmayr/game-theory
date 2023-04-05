@@ -1,0 +1,193 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Dynamic Games of Incomplete Information (continued)"
+author: "JBrandon Duck-Mayr"
+date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows, calc, positioning}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+## Signaling games
+
+. . .
+
+- We did a signaling game example last time, the "Gift Game"
+- These games explore a particular type of asymmetric info
+  + Two players: sender and receiver
+  + Sender is a good type or bad type, high type or low type, etc
+  + Sender knows their own type, but receiver doesn't
+  + Sender chooses an action that has different costs by type
+  + Usually want to convince receiver they are the good/high type
+- Three types of equilibria:
+  + Pooling: both types always choose the same action
+  + Separating: both types always choose different action
+  + Semi-separating or partial pooling: with positive probability < 1, both types choose the same action
+
+## Example: Beer or Quiche?
+
+. . .
+
+- Nature selects chooses player 1's type:
+  + wimp ($W$) with probability $p=0.1$
+  + or surly ($S$) with probability $1-p=0.9$
+- Player 1 knows their type, Player 2 does not
+- Player 1 chooses beer ($B$) or quiche ($Q$) for breakfast
+  + A surly type prefers beer while a wimp prefers quiche
+  + Preferred breakfast gives a payoff of 1, less-preferred gives 0
+  + Player 2 observes this choice
+- Player 2 chooses whether to duel ($D$) with player 1 or not ($N$)
+- If 2 chooses $N$, 1 gets an extra payoff of 2
+- If player 1 is surly, player 2's payoff is 0 from $D$ and 1 from $N$
+- If player 1 is wimp, player 2's payoff is 2 from $D$ and 1 from $N$
+
+## Example: Beer or Quiche? Game tree
+
+. . .
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[font=\footnotesize]
+\draw (0,2) -- (0,-2);
+\node at (0,0) {$\bullet$};
+\node[right] at (0,0) {Nature};
+\node[right] at (0,1) {$W$ with $0.1$};
+\node[right] at (0,-1) {$S$ with $0.9$};
+\draw (-3,2) -- (3,2);
+\draw (-3,-2) -- (3,-2);
+\node at (0,2) {$\bullet$};
+\node at (0,-2) {$\bullet$};
+\node[above] at (-1.5,2) {$B$};
+\node[above] at (1.5,2) {$Q$};
+\node[below] at (-1.5,-2) {$B$};
+\node[below] at (1.5,-2) {$Q$};
+\node at (-3,2) {$\bullet$};
+\node at (-3,-2) {$\bullet$};
+\node at (3,2) {$\bullet$};
+\node at (3,-2) {$\bullet$};
+\node[left] at (-3,0) {Player 2};
+\node[right] at (3,0) {Player 2};
+\draw[dashed] (-3,2) -- (-3,-2);
+\draw[dashed] (3,2) -- (3,-2);
+\draw (-4,1)-- (-3,2) -- (-4,3);
+\draw (-4,-1)-- (-3,-2) -- (-4,-3);
+\draw (4,1)-- (3,2) -- (4,3);
+\draw (4,-1)-- (3,-2) -- (4,-3);
+\node[left] at (-3.5, 2.5) {$D$};
+\node[left] at (-3.5, 1.5) {$N$};
+\node[left] at (-3.5, -2.5) {$N$};
+\node[left] at (-3.5, -1.5) {$D$};
+\node[right] at (3.5, 2.5) {$D$};
+\node[right] at (3.5, 1.5) {$N$};
+\node[right] at (3.5, -2.5) {$N$};
+\node[right] at (3.5, -1.5) {$D$};
+\node[left] at (-4,3) {0, 2};
+\node[left] at (-4,1) {2, 1};
+\node[right] at (4,3) {1, 2};
+\node[right] at (4,1) {3, 1};
+\node[left] at (-4,-3) {3, 1};
+\node[left] at (-4,-1) {1, 0};
+\node[right] at (4,-3) {2, 1};
+\node[right] at (4,-1) {0, 0};
+\node[above] at (0,2) {Player 1};
+\node[below] at (0,-2) {Player 1};
+\node[above] at (-2.5,2) {$\mu_{BW}$};
+\node[above] at (-2.3,-2) {$1-\mu_{BW}$};
+\node[above] at (2.5,2) {$\mu_{QW}$};
+\node[above] at (2.3,-2) {$1-\mu_{QW}$};
+\end{tikzpicture}
+\end{figure}
+
+## Example: Campaigning
+
+. . .
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[font=\footnotesize]
+\draw (0,2) -- (0,-2);
+\node at (0,0) {$\bullet$};
+\node[right] at (0,0) {Nature};
+\node[right] at (0,1) {$B$ with $\frac{1}{2}$};
+\node[right] at (0,-1) {$S$ with $\frac{1}{2}$};
+\draw (-3,2) -- (3,2);
+\draw (-3,-2) -- (3,-2);
+\node at (0,2) {$\bullet$};
+\node at (0,-2) {$\bullet$};
+\node[above] at (-1.5,2) {$L$};
+\node[above] at (1.5,2) {$H$};
+\node[below] at (-1.5,-2) {$L$};
+\node[below] at (1.5,-2) {$H$};
+\node at (-3,2) {$\bullet$};
+\node at (-3,-2) {$\bullet$};
+\node at (3,2) {$\bullet$};
+\node at (3,-2) {$\bullet$};
+\node at (-2.5,0) {Rival};
+\node at (2.5,0) {Rival};
+\draw[dashed] (-3,2) -- (-3,-2);
+\draw[dashed] (3,2) -- (3,-2);
+\draw (-4,1)-- (-3,2) -- (-4,3);
+\draw (-4,-1)-- (-3,-2) -- (-4,-3);
+\draw (4,1)-- (3,2) -- (4,3);
+\draw (4,-1)-- (3,-2) -- (4,-3);
+\node[left] at (-3.5, 2.5) {$R$};
+\node[left] at (-3.5, 1.5) {$N$};
+\node[left] at (-3.5, -2.5) {$N$};
+\node[left] at (-3.5, -1.5) {$R$};
+\node[right] at (3.5, 2.5) {$R$};
+\node[right] at (3.5, 1.5) {$N$};
+\node[right] at (3.5, -2.5) {$N$};
+\node[right] at (3.5, -1.5) {$R$};
+\node[left] at (-4,3) {6,4};
+\node[left] at (-4,1) {10,0};
+\node[right] at (4,3) {4,-10};
+\node[right] at (4,1) {8,0};
+\node[left] at (-4,-3) {6,0};
+\node[left] at (-4,-1) {4,4};
+\node[right] at (4,-3) {2,0};
+\node[right] at (4,-1) {0,-4};
+\node[above] at (0,2) {Incumbent};
+\node[below] at (0,-2) {Incumbent};
+\node[above] at (-2.5,2) {$\mu_{LB}$};
+\node[above] at (-2.3,-2) {$1-\mu_{LB}$};
+\node[above] at (2.5,2) {$\mu_{HB}$};
+\node[above] at (2.3,-2) {$1-\mu_{HB}$};
+\end{tikzpicture}
+\end{figure}
+
+## Cheap talk games
+
+. . .
+
+- What if sender can't send a *costly* signal?
+  + So sender knows their type but receiver doesn't
+  + Sender can send receiver some message, but doesn't **directly** impact payoff
+  + Receiver's action after receiving message affects both players' payoff
+- There is always a "babbling" equilibrium where no learning occurs
+- There is sometimes/often not a fully separating equilibrium
+- We're usually interested in the circumstances under which there is a non-babbling equilibrium
+
+## Cheap talk example: Medical tests
+
+- Nature determines if a test (e.g. CAT scan) would help a patient
+  + With probability $p = 1/3$, test is beneficial
+  + With probability $1 - p = 2/3$, test is useless
+- The doctor knows whether the test is beneficial, patient does not
+- Doctor recommends the test or not
+- Patient decides to take the test or not
+- Patient payoffs:
+  + 5 if took beneficial test
+  + -5 if took useless test
+  + 0 if did not take
+- Doctor payoffs:
+  + $b + 5$ if patient takes beneficial test
+  + $b - 5$ if patient takes useless test
+  + 0 if patient does not take the test
