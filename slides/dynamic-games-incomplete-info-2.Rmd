@@ -180,14 +180,8 @@ output:
 - Nature determines if a test (e.g. CAT scan) would help a patient
   + With probability $p = 1/3$, test is beneficial
   + With probability $1 - p = 2/3$, test is useless
-- The doctor knows whether the test is beneficial, patient does not
+- The doctor knows if the test is beneficial, patient does not
 - Doctor recommends the test or not
 - Patient decides to take the test or not
-- Patient payoffs:
-  + 5 if took beneficial test
-  + -5 if took useless test
-  + 0 if did not take
-- Doctor payoffs:
-  + $b + 5$ if patient takes beneficial test
-  + $b - 5$ if patient takes useless test
-  + 0 if patient does not take the test
+- Patient payoffs: 5 if took beneficial test, -5 if took useless test, 0 if did not take
+- Doctor payoffs: $b + 5$ if patient takes beneficial test, $b - 5$ if patient takes useless test, 0 if patient does not take the test
