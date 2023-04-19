@@ -1,0 +1,169 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Equilibria with Mixed Strategies in Dynamic Games"
+author: "JBrandon Duck-Mayr"
+# date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows, calc, positioning}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+## The Algorithm™
+
+You can find semi-separating equilibria in a signaling game with 2 types and mixed strategies with a "simple" 3-step algorithm:
+
+. . .
+
+1. Determine what player 2 must do to make one (or more) type(s) of player 1 mix
+2. Determine how player 1 must mix to induce the strategy from step 1
+3. Ensure consistency of beliefs and sequential rationality for the resulting strategy profile
+
+## Example (Setup)
+
+\only<2-8>{
+\begin{itemize}
+\tightlist
+\item<2-> Nature chooses the state of the world
+    \begin{itemize}
+    \tightlist
+    \item<3-> It is $x$ with probability $\pi < 1/2$
+    \item<4-> It is $y$ with probability $1 - \pi$
+    \end{itemize}
+\item<5-> An avisor $A$ learns the state of the world and tells a decision maker $D$ to take either action $X$ or action $Y$
+\item<6-> $D$ then chooses to take action $X$ or action $Y$
+\item<7-> $D$ receives payoff of 1 if the action matches the state (e.g. $X$ and $x$) or 0 otherwise
+\item<8-> $A$ receives a payoff of 1 if $X$ is chosen and 0 if $Y$ is chosen, regardless of the state, but also bears a cost $c > 0$ if they give incorrect advice
+\end{itemize}
+}
+
+\only<9>{
+\begin{figure}
+\centering
+\footnotesize
+\begin{tikzpicture}[thin,every circle node/.style={minimum size=1.5mm,inner sep=0mm}]
+	\tikzstyle{level 1}=[level distance=1.5in]
+	\tikzstyle{level 2}=[level distance=.75in]
+	\tikzstyle{level 3}=[level distance=.75in, sibling distance=30mm]		
+  \node[circle,draw,label={above:Chance}] (root) {}
+			child[grow=left] {node[circle,fill,label=left:A]{}
+					child[grow=up] {node(1)[circle,fill,label={left:$[\lambda]$}]{}
+							child {node[above]{$0,0$}
+								edge from parent
+								node[right]{$Y$}}
+							child {node[above]{$1,1$}
+								edge from parent
+								node[left]{$[p]$ $X$}}
+						edge from parent
+						node[left]{$[r]$ $X$ $is$ $best$}}
+					child[grow=down] {node(3)[circle,fill,label={left:$[\mu]$}]{}
+							child {node[below]{$1-c,1$}
+								edge from parent
+								node[left]{$[q]$ $X$}}
+							child {node[below]{$-c,0$}
+								edge from parent
+								node[right]{$Y$}}
+						edge from parent
+						node[left]{$Y$ $is$ $best$}}
+				edge from parent
+				node[above]{$\pi$}
+				node[below]{$x$}}
+			child[grow=right] {node[circle,fill,label=right:A]{}
+					child[grow=up] {node(2)[circle,fill]{}
+							child {node[above]{$-c,1$}
+								edge from parent
+								node[right]{$Y$}}
+							child {node[above]{$1-c,0$}
+								edge from parent
+								node[left]{$X$}}
+						edge from parent
+						node[right]{$X$ $is$ $best$ $[s]$}}
+					child[grow=down] {node(4)[circle,fill]{}
+							child {node[below]{$1,0$}
+								edge from parent
+								node[left]{$X$}}
+							child {node[below]{$0,1$}
+								edge from parent
+								node[right]{$Y$}}
+						edge from parent
+						node[right]{$Y$ $is$ $best$}}
+				edge from parent
+				node[above]{$1-\pi$}
+				node[below]{$y$}};
+	\draw[dashed](1)to(2);
+	\draw[dashed](3)to(4);
+	\node[above] at($(1)!.5!(2)$){D};
+	\node[above] at($(3)!.5!(4)$){D};
+\end{tikzpicture}
+\end{figure}
+}
+
+## Example (Step 1)
+
+Step 1: Determine what player 2 must do to make one (or more) type(s) of player 1 mix
+
+. . .
+
+- First notice that $A$ and $D$'s interests are aligned when the state is $x$
+- So we should try to induce mixing for the $y$ type of $A$
+- $A$'s expected utility of saying $X$ is best when the state is $y$ is $p - c$
+- $A$'s expected utility of saying $Y$ is best when the state is $y$ is $q$
+- So $A$ can mix if $q = p - c$
+
+## Example (Step 2)
+
+Step 2: Determine how player 1 must mix to induce the strategy from step 1
+
+\only<1-7>{
+\begin{itemize}
+\tightlist
+\item<1-> If $A$ mixes, both of $D$'s information sets are reached with positive probability
+    \begin{itemize}
+    \tightlist
+    \item<2-> Assuming $A$ always says $X$ is best when the state is $x$, then $A$ only says $Y$ is best when the state is $Y$, so $\mu = 0$
+    \item<3-> But both types sometimes say $X$ is best, so $\lambda = \frac{\pi r}{\pi r + (1 - \pi) s}$
+    \end{itemize}
+\item<4-> So at the bottom information set, $D$ chooses $Y$ for sure ($q = 0$)
+\item<5-> This means $p$ must equal $c$ (since $A$ can only mix if $q = p - c$)
+\item<6-> $D$'s expected utility of choosing $X$ if $A$ says $X$ is best is $1\lambda + (1 - \lambda) 0 = \lambda$
+\item<7-> $D$'s expected utility of choosing $Y$ if $A$ says $Y$ is best is $0\lambda + 1(1 - \lambda) = 1 - \lambda$
+\end{itemize}
+}
+
+\only<8->{
+\begin{itemize}
+\tightlist
+\item<8-> So $D$ can mix if $\lambda = 1/2$, and since $r$ will be 1, $A$ must set $s$ according to:
+
+\begin{align*}
+\lambda & = \frac{1}{2} \\
+\frac{\pi r}{\pi r + (1 - \pi)s} & = \frac{1}{2} \\
+\frac{2\pi}{\pi + (1 - \pi)s} & = 1 \\
+2\pi & = \pi + \left( 1 - \pi \right) s \\
+\pi & = \left( 1 - \pi \right) s \\
+\frac{\pi}{1 - \pi} & = s
+\end{align*}
+\end{itemize}
+}
+
+## Example (Step 3)
+
+Step 3: Ensure consistency of beliefs and sequential rationality for the resulting strategy profile
+
+. . .
+
+- We worked out consistency of beliefs in Step 2
+  + $\mu = 0, \lambda = \frac{\pi r}{\pi r + (1 - \pi)s} = \frac{1}{2}$
+- The strategy profile is $r = 1, s = \frac{\pi}{1 - \pi}, q = 0, p = c$
+- So, let's double-check sequential rationality:
+  + When the state is $x$, $A$'s expected utility of recommending $X$ is $c$ (since $p = c$) and $A$ expected utility of recommending $Y$ is $-c$ (since $q = 0$), so that's fine
+  + As we found in Step 1, since $p = c$, $A$ is indifferent when the state is $y$, so that also works
+  + At the bottom information set, $q = 0$ is in fact optimal for $D$ when $\mu = 0$ since $1 > 0$
+  + At the top information set, $D$ is indifferent as we worked out in Step 2 since $s = \frac{\pi}{1 - \pi}$, so $p = c$ is sequentially rational
