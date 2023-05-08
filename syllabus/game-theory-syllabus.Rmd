@@ -115,20 +115,21 @@ This request must be submitted within one week of receiving your graded assigntm
    - Why game theory, the nature of "utility" and "rationality"
    - Week One: Read Chapter 1 of Osborne before class
    - No problem set for week one
-1. Games of perfect information
+1. Games of complete information
    A.  Games and Nash Equilibrium
        - Weeks Two and Three: Strategic games and Nash equilibria in pure strategies, Osborne Chapter 2
        - Week Four: Mixed strategy Nash equilibria, Osborne Chapter 4
    B.  Sequential games and Subgame Perfect Nash Equilibrium
        - Week Five through Seven: Sequential games, Osborne Chapter 5
    C.  **Midterm Exam** on Week Eight (March 1)
-2. Games of imperfect information and repeated games
+2. Games of incomplete information and repeated games
    A.  Repeated games
        - Week Nine: Repeated games, Osborne Chapter 14
    B.  Bayesian games and Bayesian Nash Equilibrium
        - Weeks Ten and Eleven: Bayesian games, Osborne Chapter 9
    C.  Sequential games with imperfect information and Perfect Bayesian Equilibrium
        - Weeks Twelve through Fourteen: Sequential games with imperfect information, Osborne Chapter 10
+       - Intro to equilibrium refinements and advanced topics on the last week
    D.  **Final Exam** (Date TBD, sometime between April 27 and May 1)
 
 \newpage

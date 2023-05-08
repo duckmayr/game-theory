@@ -1,0 +1,203 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Final Prep & Intro to Advanced Topics"
+author: "JBrandon Duck-Mayr"
+# date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows, calc, positioning}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+## Final exam
+
+- Time:
+  + Registrar says April 29 as default; absent objection I will instead:
+  + Make the exam available at 12:01 a.m. on April 28 and
+  + require submission of the exam by 11:59 p.m. on April 29
+  + (No other time constraints imposed; you choose when & how long to work)
+- Format
+  + 3 questions
+    * 1 Bayesian game
+    * 1 signaling game
+    * 1 cheap talk game
+  + Just like last time
+    * Open book, open notes, just have to answer by yourself
+    * Upload solutions to Canvas
+
+## Bayesian games refresher
+
+- Static game of incomplete information
+- At least one player has private knowledge; a type
+- Payoffs can depend on these "types"
+- Solution concept: Bayesian Nash equilibrium
+- Just like NE, but BNE subs in expected payoffs given beliefs about types
+
+## Signaling games refresher
+
+- Dynamic game of incomplete information with two players, a sender & receiver
+- Nature chooses sender's type & only sender knows it
+- Sender sends costly signal to receiver
+- Receiver updates belief about sender's type and chooses an action
+- Usually looking for perfect Bayesian equilibrium solutions
+  + Separating equilibrium: All types of sender always send different signals
+  + Pooling equilibrium: All types of sender always send the same signal
+  + Semi-separating / partial-pooling: At least some types send different signals at least sometimes
+
+## A strategy for finding pooling equilibria
+
+1. Assume a pooling strategy for the sender
+1. Find receiver's optimal strategy given consistent belief (prior)
+1. Check if the sender's pooling strategy is optimal in light of (2)
+
+## A strategy for finding separating equilibria
+
+1. Assume a separating strategy for the sender
+1. Find receiver's optimal strategy given consistent belief (1 or 0)
+1. Check if the sender's pooling strategy is optimal in light of (2)
+
+## A strategy for finding semi-separating equilibria
+
+1. Determine what player 2 must do to make one (or more) type(s) of player 1 mix
+2. Determine how player 1 must mix to induce the strategy from step 1
+3. Ensure consistency of beliefs and sequential rationality for the resulting strategy profile
+
+## Cheap talk games refresher
+
+- Like signaling game, except signals are not costly
+- Pooling equilibria are called "babbling equilibria"
+- There's always at least one babbling equilibrium
+- There may not be a non-babbling equilibrium
+- Solve just like a signaling game
+
+## Equilibrium refinements
+
+- Perfect Bayesian equilibrium does not restrict off-path beliefs
+- Sometimes this results in undesirable equilibria
+- There are a variety of refinements on PBE to deal with this
+- We'll cover two:
+  + The Intuitive Criterion
+  + Divinity and the D1 & D2 criteria
+
+## Intuitive criterion
+
+- [Cho and Kreps (1986)](https://doi.org/10.2307/1885060)
+- Sometimes (particularly pooling) PBE are supported by off-path beliefs that seem... unreasonable
+- It may be (for example) that only one type of sender could possibly benefit from deviating, but the PBE places a higher belief on the other type of sender off-path
+- The "intuitive criterion" eliminates such "strange" equilibria
+
+## Intuitive criterion example: Beer or quiche?
+
+\only<1, 5, 8, 12>{
+\begin{figure}
+\centering
+\begin{tikzpicture}[font=\footnotesize]
+\draw (0,2) -- (0,-2);
+\node at (0,0) {$\bullet$};
+\node[right] at (0,0) {Nature};
+\node[right] at (0,1) {$W$ with $0.1$};
+\node[right] at (0,-1) {$S$ with $0.9$};
+\draw (-3,2) -- (3,2);
+\draw (-3,-2) -- (3,-2);
+\node at (0,2) {$\bullet$};
+\node at (0,-2) {$\bullet$};
+\node[above] at (-1.5,2) {$B$};
+\node[above] at (1.5,2) {$Q$};
+\node[below] at (-1.5,-2) {$B$};
+\node[below] at (1.5,-2) {$Q$};
+\node at (-3,2) {$\bullet$};
+\node at (-3,-2) {$\bullet$};
+\node at (3,2) {$\bullet$};
+\node at (3,-2) {$\bullet$};
+\node[left] at (-3,0) {Player 2};
+\node[right] at (3,0) {Player 2};
+\draw[dashed] (-3,2) -- (-3,-2);
+\draw[dashed] (3,2) -- (3,-2);
+\draw (-4,1)-- (-3,2) -- (-4,3);
+\draw (-4,-1)-- (-3,-2) -- (-4,-3);
+\draw (4,1)-- (3,2) -- (4,3);
+\draw (4,-1)-- (3,-2) -- (4,-3);
+\node[left] at (-3.5, 2.5) {$D$};
+\node[left] at (-3.5, 1.5) {$N$};
+\node[left] at (-3.5, -2.5) {$N$};
+\node[left] at (-3.5, -1.5) {$D$};
+\node[right] at (3.5, 2.5) {$D$};
+\node[right] at (3.5, 1.5) {$N$};
+\node[right] at (3.5, -2.5) {$N$};
+\node[right] at (3.5, -1.5) {$D$};
+\node[left] at (-4,3) {0, 2};
+\node[left] at (-4,1) {2, 1};
+\node[right] at (4,3) {1, 2};
+\node[right] at (4,1) {3, 1};
+\node[left] at (-4,-3) {3, 1};
+\node[left] at (-4,-1) {1, 0};
+\node[right] at (4,-3) {2, 1};
+\node[right] at (4,-1) {0, 0};
+\node[above] at (0,2) {Player 1};
+\node[below] at (0,-2) {Player 1};
+\node[above] at (-2.5,2) {$\mu_{BW}$};
+\node[above] at (-2.3,-2) {$1-\mu_{BW}$};
+\node[above] at (2.5,2) {$\mu_{QW}$};
+\node[above] at (2.3,-2) {$1-\mu_{QW}$};
+\end{tikzpicture}
+\end{figure}
+}
+
+\only<2-4, 6>{
+\begin{itemize}
+\tightlist
+\item<2-> The PBE are
+    \begin{itemize}
+    \tightlist
+    \item<2-> ($BB, ND$) with $\mu_{BW}=0.1$ and $\mu_{QW}\geq \frac{1}{2}$
+    \item<2-> ($QQ, DN$) with $\mu_{BW}\geq \frac{1}{2}$ and $\mu_{QW}=0.1$
+    \end{itemize}
+\item<3-> The ($QQ, DN$) PBE may seem\dots\ odd; player 2 must believe player 1 is probably a weak type if they see them drinking beer
+\item<4-> However, at most, a weak type could get 2 from drinking beer, less than the equilibrium payoff of 3
+\item<6-> So we say drinking beer is \textbf{equilibrium dominated} for weak types
+\end{itemize}
+}
+
+\only<7, 9-11>{
+\begin{itemize}
+\item<7-> At the same time, a strong type could get 3 from drinking beer \textit{if player 2 believed they were a strong type}, greater than the equilibrium payoff of 2
+\item<9-> An equilibrium fails the Intuitive Criterion if there is a signal $m$ for which
+    \begin{itemize}
+    \tightlist
+    \item<10-> $m$ is equilibrium dominated for at least one type of sender, and
+    \item<11-> at least one type of sender would be strictly better off playing $m$ if the receiver assigned probability 0 to types for whom $m$ is equilibrium dominated
+    \end{itemize}
+\end{itemize}
+}
+
+## Divinity and the D1 & D2 criteria
+
+- [Banks and Sobel (1987)](https://doi.org/10.2307/1913604) describe "divine" criteria; we usually use the very closely related concept, the D1 criterion
+- D1 goes farther than IC
+  + Not only are we eliminating equilibrium dominated types,
+  + We keep only the types with the most receiver best responses to deviation that make the sender better off
+  + "Divinity" is slightly weaker than this in technical ways you don't need to know right now
+- D2 goes farther still (maybe too far)
+  + Also eliminate types if for every receiver best response that would incentivize the type to deviate, there is another type that strictly benefits from the deviation
+  + "Universal divinity" iteratively applies D2
+
+## *Brief* intro to advanced topics
+
+- Poisson games
+  + What if we don't know how many players there are?
+  + Treat the number of players as a Poisson random variable
+  + Notable application: Voting
+  + [Myerson (1998)](https://doi.org/10.1007/s001820050079)
+- Markov games
+  + Dynamic game where the state of the world changes **randomly** from time $t$ to time $t+1$
+  + The probability distribution over new states is jointly determined by the players' actions at time $t$
+  + Notable application: Evolutionary biology
+  + [Shapley (1953)](https://doi.org/10.1073/pnas.39.10.1095)
+    * See also [Solan and Vieille (2015)](https://doi.org/10.1073/pnas.1513508112)
