@@ -1,14 +1,14 @@
 ---
 title: "Intro to Formal Political Analysis, GOV 385N"
-date: "Spring 2023"
-classroom: "BAT 5.102"
-classhours: "W 3--6 p.m."
+date: "Spring 2024"
+classroom: "BAT 5.104"
+classhours: "Wednesday noon to 3 p.m."
 
 author: "JBrandon Duck-Mayr"
-# instructorpronouns: "They/Them"
+instructorpronouns: "They/Them"
 email: "Use Canvas to email"
 office: "MEZ 3.128"
-officehours: "M 1--4 PM or appointment"
+officehours: "Tuesday 9 a.m. to noon, or by appointment"
 
 # TA: "Firstname Lastname"
 # # TApronouns: "They/Them"
