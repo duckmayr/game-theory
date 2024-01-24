@@ -116,6 +116,28 @@ $D$ & $3, 0$    & $1, 1$
 
 (this requires you add `\usepackage{sgame}` to your preamble)
 
+
+
+## Choosing an action in the Prisoner's Dilemma
+
+::: nonincremental
+
+- Players: The two suspects
+- Actions: Each player can stay quiet ($C$) or talk ($D$)
+- Preferences:
+  + From best to worst, Player 1 prefers:
+    - $(D, C)$; 1 goes free and 2 is convicted of the major crime
+    - $(C, C)$; both are only convicted of the minor crime only
+    - $(D, D)$; both are convicted of the felony with a reduced sentence
+    - $(C, D)$; 1 is convicted of the major crime and pays full freight
+  + Player 2's ordering is $(C, D)$, $(C, C)$, $(D, D)$, and $(D, C)$.
+
+:::
+
+&nbsp;
+
+A utility function that represents Player 1's preferences is $$u_1(D, C) = 3,\ u_1(C, C) = 2,\ u_1(D, D) = 1,\ u_1(C, D) = 0$$
+
 ## Nash Equilibrium
 
 . . .
@@ -131,7 +153,7 @@ where $u_i$ is a payoff function that represents player $i$'s preferences.
 
 . . .
 
-In other words, a Nash equilibrium is an action profile where no player can gain by unilateral deviation
+In other words, a Nash equilibrium is an action profile where no player can gain by **unilateral** deviation
 
 ## Nash equilibrium in The Prisoner's Dilemma
 
@@ -173,7 +195,7 @@ D & \textbf{3}, 0 & \textbf{1}, \textbf{1}
 - Notice they'd both be better off in the action profile $(C, C)$
 - But Nash equilibrium is about *unilateral* deviation
 
-## Domination
+## Strict domination
 
 . . .
 
@@ -181,15 +203,31 @@ D & \textbf{3}, 0 & \textbf{1}, \textbf{1}
 ### Osborne, Definition 45.1
 In a strategic game... player $i$'s action $a_i''$ **strictly dominates** her action $a_i'$ if
 
-$$ u_i\left(a_i'', a_{-i}\right) > u_i\left(a_i', a_{-i}\right) \text{ for every list } a_{-i} \text{ of the other players' actions }, $$
+$$ u_i\left(a_i'', a_{-i}\right) > u_i\left(a_i', a_{-i}\right), $$
 
+for every list $a_{-i}$ of the other players' actions,
 where $u_i$ is a payoff function that represents player $i$'s preferences.
 We say that the action $a_i'$ is **strictly dominated**.
 :::
 
-. . .
+## Weak domination
 
-**Weak domination** is defined the same way, but you just replace $>$ with $\geq$ in the definition above (see Osborne, Definition 46.1).
+::: {.block}
+### Osborne, Definition 46.1
+In a strategic game with ordinal preferences, player $i$'s action $a_i$ **weakly dominates** her action $a_i'$ if
+
+$$
+u_i \left(a_i , a_{-i} \right) \geq u_i \left(a_i' , a_{-i} \right)
+$$
+
+for every list $a_{-i}$ of the other players' actions and
+
+$$
+u_i \left(a_i , a_{-i} \right) > u_i \left(a_i' , a_{-i} \right)
+$$
+
+for some list $a_{-i}$ of the other players' actions...
+:::
 
 ## Domination in The Prisoner's Dilemma
 
@@ -321,7 +359,7 @@ T & -1, \textbf<5->{1} & \textbf<3->{1}, -1
 \end{table}
 
 \onslide<6->{
-There is no Nash equilibrium in the Matching Pennies game.
+There is no pure strategy Nash equilibrium in the Matching Pennies game.
 }
 
 \onslide<7>{
@@ -360,4 +398,4 @@ Questions:
   + Review what we've gone over
   + Additionally read Sections 2.8.1 to 2.8.3 in Osborne (pages 35--42 in the 9th printing)
 - Don't forget to turn in Problem Set 1 before the next class!
-- If you need help, my office hours are 1--4 p.m. on Mondays
+- If you need help, my office hours are 9 a.m.--12 p.m. on Tuesdays
