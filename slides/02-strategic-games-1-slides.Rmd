@@ -274,7 +274,7 @@ For both of them, the worst option is going to a concert alone.
 - Actions: Each player can go to the Bach concert ($B$) or the Stravinski concert ($S$)
 - Preferences:
   + From best to worst, Player 1 prefers $(B, B), (S, S), (B, S), (S, B)$
-  + From best to worst, Player 2 prefers $(S, S), (B, B), (B, S), (S, B)$
+  + From best to worst, Player 2 prefers $(S, S), (B, B), (S, B), (B, S)$
   + Assuming they don't care about which concert they go to if alone, a utility function that represents Player 1's preferences is $$u_1(B, B) = 2,\ u_1(S, S) = 1,\ u_1(B, S) = u_1(S, B) = 0$$
 
 ## Example: Bach or Stravinski?
