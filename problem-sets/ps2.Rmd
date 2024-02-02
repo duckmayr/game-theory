@@ -42,4 +42,4 @@ Each firm cares only about its profit.
 
 a. Find the firms' best response functions.
 b. Depict the firms' best response functions including where they intersect, if anywhere.
-c. What are the Nash equibria, if any, of this game?
+c. What are the Nash equilibria, if any, of this game?
