@@ -13,6 +13,7 @@ header-includes:
 output:
     quack::presentation:
         toc: false
+        incremental: true
 ---
 
 ```{r setup, include=FALSE}
@@ -50,6 +51,32 @@ Now we will introduce "mixed strategies", or allowing the players to randomize
 ### Osborne Definition 107.1
 A **mixed strategy** of a player in a strategic game is a probability distribution over the player's actions.
 :::
+
+## Utility functions
+
+. . .
+
+- So far, we have only needed to assume ordinal preferences over deterministic outcomes
+- But with randomization, this is no longer sufficient
+- **von Neumann---Morgenstern** (vNM) preferences are "preferences regarding lotteries represented by the expected value of a payoff function over deterministic outcomes"; this is what we will use for players' preferences when randomization is at play
+- So now our assumptions about the cardinal payoff function we use really matter
+
+. . .
+
+\begin{figure}
+    \centering
+    \begin{tabular}{lcc}
+        & C & D \\
+        C & 2, 2 & 0, 3 \\
+        D & 3, 0 & 1, 1
+    \end{tabular}
+    \hspace*{3em}
+    \begin{tabular}{lcc}
+        & C & D \\
+        C & 3, 3 & 0, 4 \\
+        D & 4, 0 & 1, 1
+    \end{tabular}
+\end{figure}
 
 ## Mixed Strategy Nash Equilibrium
 
@@ -364,3 +391,7 @@ M & 0, 0 & 3, 5 \\
 B & 4, 4 & 0, 3
 \end{tabular}
 \end{table}
+
+## Example: Reporting a crime (from Osborne)
+
+## Example: Election campaigns (from Osborne)

@@ -228,3 +228,67 @@ An assessment $(\beta, \mu)$ (consisting of a behavioral strategy profile $\beta
     \end{tikzpicture}
     \end{center}
 \end{figure}
+
+## The Gift Game
+
+Let's find the pure strategy PBE.
+
+. . .
+
+First note there cannot be an equilibrium where Friends give gifts and Enemies don't; for the Friend type to give a gift, it must be that player 2 chooses $A$, but if that were true, Enemy types would always give gifts also.
+
+. . .
+
+It is trivial to show that the strategy profile $(NN, R)$ paired with any belief system is a PBE.
+
+. . .
+
+Additionally, $(GG, A)$ with $\mu = p$ is a PBE when $p \geq 0.5$.
+
+## The Gift Game
+
+Now let's consider mixed-strategy PBE.
+When can both types give gifts with the same probability? i.e., when can $0 < f = e < 1$?
+
+. . .
+
+What about where $0 \leq f < e \leq 1$ or $0 \leq e < f \leq 1$?
+
+## The Gift Game
+
+If $f > 0$ or $e > 0$, $\mu$ is constrained by consistency, so $\mu$ must be $\frac{pf}{pf + e(1 - p)}$.
+
+. . .
+
+If $f$ or $e$ are also less than one, it must be that $EU_1(G) = EU_1(N) = 0$, which means $a$ must be $0.5$.
+
+## The Gift Game
+
+If $a = 0.5$, it must be that $EU_2(A) = EU_2(R)$, so it must also be that \pause $\frac{p}{1 - p} = \frac{e}{f}$:
+
+. . .
+
+\begin{align*}
+    2\mu - 1                    & = 0 \\
+    2\mu                        & = 1 \\
+    \mu                         & = 0.5 \\
+    \frac{pf}{pf + e(1 - p)}    & = 0.5 \\[0.5em]
+    \frac{2pf}{pf + e(1 - p)}   & = 1 \\[0.5em]
+    2pf                         & = pf + e (1 - p) \\
+    pf                          & = e (1 - p) \\[0.5em]
+    \frac{p}{1 - p}             & = \frac{e}{f}
+\end{align*}
+
+## The Gift Game
+
+So, there can be mixed strategy PBE iff
+
+. . .
+
+$$
+f, e > 0, 0 < p \leq \frac{1}{2}, a = \frac{1}{2}, \text{ and } \frac{p}{1 - p} = \frac{e}{f}.
+$$
+
+. . .
+
+In this PBE, note that both types of Player 1 have the same strategy if and only if $p = 0.5$; the strategy differs based on type otherwise.

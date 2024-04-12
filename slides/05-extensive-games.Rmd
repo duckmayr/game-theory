@@ -446,3 +446,52 @@ Any finite game of perfect information has a backward induction solution that is
 ### Stigler's Law
 No scientific discovery is named after it's original discoverer.
 :::
+
+. . .
+
+Stigler's law was originally discovered by Robert K. Merton.
+
+## Examples
+
+. . .
+
+- Ultimatum game
+- Mutually assured destruction
+- Hotelling-Downs with strategic voters
+- Committee decision making
+- Agenda-setting with moves by chance
+
+## Mutually Assured Destruction
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \tikzstyle{solid node}=[circle,  draw, inner sep = 1.5, fill = black]
+    \tikzstyle{hollow node}=[circle, draw, inner sep = 1.5]
+    \tikzstyle{level 1}=[level distance = 20mm, sibling distance = 5cm]
+    \tikzstyle{level 2}=[level distance = 30mm, sibling distance = 5cm]
+    %% This is the root node
+    \node (a) [hollow node, label = above:{USA}] {}
+        %% This is the first (left-most) child node
+        child{ node (b) [solid node, label = above left:{USSR}] {}
+            %% It has its own children
+            child{ node {
+                \begin{tabular}{clcc}
+                & & \multicolumn{2}{c}{USSR} \\
+                \multirow{3}{*}{\STAB{\rotatebox[origin=c]{90}{USA}}}
+                & & R & D \\
+                & R & -5, -5 & -100, -100 \\
+                & D & -100, -100 & -100, -100
+                \end{tabular}
+                }
+                edge from parent node [above left] {Confront}
+            }
+            child{ node {10, -10} edge from parent node [above right] {Back Down} }
+            %% This specifies the edge from node (1) to node (0)
+            edge from parent node [above left] {Escalate}
+        }
+        %% This is the right-most child node of the root node, or node (0)
+        child{ node {0, 0} edge from parent node [above right] {Ignore} }
+        ;
+\end{tikzpicture}
+\end{figure}
