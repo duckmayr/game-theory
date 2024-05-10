@@ -19,9 +19,8 @@ output:
 ## Final exam
 
 - Time:
-  + Registrar says April 29 as default; absent objection I will instead:
-  + Make the exam available at 12:01 a.m. on April 28 and
-  + require submission of the exam by 11:59 p.m. on April 29
+  + Make the exam available at 12:01 a.m. on exam day and
+  + require submission of the exam by 11:59 p.m. that day
   + (No other time constraints imposed; you choose when & how long to work)
 - Format
   + 3 questions

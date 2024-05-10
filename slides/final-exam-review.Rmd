@@ -1,0 +1,214 @@
+---
+title: "Intro to Formal Political Analysis:\\newline Final Exam Review"
+author: "JBrandon Duck-Mayr"
+# date: "`r quack::american_date_format(Sys.Date())`"
+urlcolor: Blue
+header-includes:
+    - \newcommand{\setsep}{\setlength{\itemsep}{3pt}}
+    - \newcommand{\setskip}{\setlength{\parskip}{3pt}}
+    - \renewcommand{\tightlist}{\setsep\setskip}
+    - \setlength{\abovedisplayskip}{-6pt}
+    - \usepackage{tikz}
+    - \usetikzlibrary{arrows, calc, positioning}
+output:
+    quack::presentation:
+        toc: false
+        incremental: true
+---
+
+## The final exam
+
+- 3 questions: A Bayesian game, a signaling game, and a cheap talk game
+- Available from 12:01 a.m. May 2 until 11:59 p.m. May 4
+  + Extra time due to various scheduling requests
+- Again, open book, open notes, but cannot collaborate
+
+## Bayesian game
+
+\setlength\belowcaptionskip{-5pt}
+
+\begin{itemize}
+    \tightlist
+    %\item<2-> Consider a variant of Bach or Stravinsky where with probability $p = 1/2$, player two prefers \textbf{not} to go out with player one
+    \item<2-> BoS variant: with prob 1/2, P2 \textbf{doesn't} want to go out with P1
+    \item<4-> We can then create a matrix of expected payoffs for P1
+    \item<6-> and find P1's best response to each strategy of P2
+    \item<7-> Then do the same for each type of P2
+    \item<8> To see the BNE is $(B, BS)$
+\end{itemize}
+
+\onslide<3->{
+\begin{table}
+\footnotesize
+\caption{\only<3-6>{Modified BoS}\only<7->{Player two's best responses}}
+\begin{tabular}{lcc}
+\multicolumn{3}{c}{With prob 1/2,} \\
+\multicolumn{3}{c}{2 wants to meet 1} \\[0.5em]
+& B & S \\
+B & 2, \textcolor<7->{BurntOrange}{\textbf<7->{1}} & 0, 0 \\
+S & 0, 0 & 1, \textcolor<7->{BurntOrange}{\textbf<7->{2}}
+\end{tabular}
+\begin{tabular}{lcc}
+\multicolumn{3}{c}{With prob 1/2,} \\
+\multicolumn{3}{c}{2 doesn't} \\[0.5em]
+& B & S \\
+B & 2, 0 & 0, \textcolor<7->{BurntOrange}{\textbf<7->{2}} \\
+S & 0, \textcolor<7->{BurntOrange}{\textbf<7->{1}} & 1, 0
+\end{tabular}
+\end{table}
+}
+\onslide<5->{
+\begin{table}
+\footnotesize
+\caption{Player one's \only<5>{expected payoffs}\only<6->{best responses}}
+\begin{tabular}{lcccc}
+& BB & BS & SB & SS \\
+B & \textcolor<6->{BurntOrange}{\textbf<6->{2}} & \textcolor<6->{BurntOrange}{\textbf<6->{1}} & \textcolor<6->{BurntOrange}{\textbf<6->{1}} & 0 \\
+S & 0 & 1/2 & 1/2 & \textcolor<6->{BurntOrange}{\textbf<6->{1}}
+\end{tabular}
+\end{table}
+}
+
+## Signaling game
+
+\only<1, 3, 7, 9, 11>{
+\begin{figure}
+\centering
+\begin{tikzpicture}[font=\footnotesize]
+\draw (0,2) -- (0,-2);
+\node at (0,0) {$\bullet$};
+\node[right] at (0,0) {Nature};
+\node[right] at (0,1) {$t_1$ with $\frac{1}{2}$};
+\node[right] at (0,-1) {$t_2$ with $\frac{1}{2}$};
+\draw (-3,2) -- (3,2);
+\draw (-3,-2) -- (3,-2);
+\node at (0,2) {$\bullet$};
+\node at (0,-2) {$\bullet$};
+\node[above] at (-1.5,2) {$L$};
+\node[above] at (1.5,2) {$R$};
+\node[below] at (-1.5,-2) {$L$};
+\node[below] at (1.5,-2) {$R$};
+\node at (-3,2) {$\bullet$};
+\node at (-3,-2) {$\bullet$};
+\node at (3,2) {$\bullet$};
+\node at (3,-2) {$\bullet$};
+\node at (-2.5,0) {P2};
+\node at (2.5,0) {P2};
+\draw[dashed] (-3,2) -- (-3,-2);
+\draw[dashed] (3,2) -- (3,-2);
+\draw (-4,1)-- (-3,2) -- (-4,3);
+\draw (-4,-1)-- (-3,-2) -- (-4,-3);
+\draw (4,1)-- (3,2) -- (4,3);
+\draw (4,-1)-- (3,-2) -- (4,-3);
+\node[left] at (-3.5, 2.5) {$U$};
+\node[left] at (-3.5, 1.5) {$D$};
+\node[left] at (-3.5, -2.5) {$D$};
+\node[left] at (-3.5, -1.5) {$U$};
+\node[right] at (3.5, 2.5) {$U$};
+\node[right] at (3.5, 1.5) {$D$};
+\node[right] at (3.5, -2.5) {$D$};
+\node[right] at (3.5, -1.5) {$U$};
+\node[left] at (-4,3) {2, 1};
+\node[left] at (-4,1) {2, 0};
+\node[right] at (4,3) {5, 4};
+\node[right] at (4,1) {3, 1};
+\node[left] at (-4,-3) {2, 1};
+\node[left] at (-4,-1) {4, 0};
+\node[right] at (4,-3) {3, 1};
+\node[right] at (4,-1) {2, 0};
+\node[above] at (0,2) {P1};
+\node[below] at (0,-2) {P1};
+\node[above] at (-2.5,2) {$\mu$};
+\node[above] at (-2.3,-2) {$1-\mu$};
+\node[above] at (2.5,2) {$\lambda$};
+\node[above] at (2.3,-2) {$1-\lambda$};
+\end{tikzpicture}
+\end{figure}
+}
+
+\begin{itemize}
+    \tightlist
+    \item<2, 4-6, 8, 10> First note that for type $t_1$, $R$ dominates $L$
+    \item<5-6, 8, 10> So $\mu$ must be $0$ and P2 plays $D$ at that info set
+    \item<6, 8, 10> Pooling equilibrium: $((RR, DU), (\mu = 0, \lambda = 1/2))$
+    \item<8, 10> Separating equilibrium: $((RL, DU), (\mu = 0, \lambda = 1))$
+    \item<10> Semi-separating equilibrium: $(((R, L \text{ with probability } p \in [0, 1]), DU), (\mu = 0, \lambda = 1/(2-p)))$
+\end{itemize}
+
+\onslide<10>{
+\begin{align*}
+\lambda \equiv \Pr\left(t_1 \mid R\right)
+& = \frac{\Pr\left(R \mid t_1\right) \Pr\left(t_1\right)}{\Pr\left(R \mid t_1\right) \Pr\left(t_1\right) + \Pr\left(R \mid t_2\right) \Pr\left(t_2\right)} \\
+& = \frac{\left(1\right) \left(1/2\right)}{\left(1\right) \left(1/2\right) + \left(1 - p\right) \left(1/2\right)} \\
+& = \frac{1}{2 - p}
+\end{align*}
+}
+
+## Cheap talk game
+
+. . .
+
+- Nature chooses if a stock will overperform the market, underperform, or neither
+- Analyst observes this, Investor does not
+- Analyst recommends to Buy, Hold, or Sell
+- Investor decides to either Buy, Hold, or Sell
+- The payoffs are as follows:
+
+\onslide<7->{
+\begin{table}
+\footnotesize
+\begin{tabular}{lccc}
+\multicolumn{4}{c}{State = Outperform} \\[0.5em]
+& B & H & S \\
+B & $(a+1, 1)$ & $(0, 0)$ & $(-b-1, -1)$ \\
+H & $(a+1, 1)$ & $(0, 0)$ & $(-b-1, -1)$ \\
+S & $(a+1, 1)$ & $(0, 0)$ & $(-b-1, -1)$ \\
+\end{tabular}
+\begin{tabular}{lccc}
+\multicolumn{4}{c}{State = Neutral} \\[0.5em]
+& B & H & S \\
+B & $(a, 0)$ & $(1, 1)$ & $(-b, 0)$ \\
+H & $(a, 0)$ & $(1, 1)$ & $(-b, 0)$ \\
+S & $(a, 0)$ & $(1, 1)$ & $(-b, 0)$ \\
+\end{tabular}
+\begin{tabular}{lccc}
+\multicolumn{4}{c}{State = Underperform} \\[0.5em]
+& B & H & S \\
+B & $(a-1, -1)$ & $(0, 0)$ & $(1-b, 1)$ \\
+H & $(a-1, -1)$ & $(0, 0)$ & $(1-b, 1)$ \\
+S & $(a-1, -1)$ & $(0, 0)$ & $(1-b, 1)$ \\
+\end{tabular}
+\end{table}
+}
+
+## Cheap talk game
+
+Assume both $a < 1$ and $b < 1$; is there a separating equilibrium where the Analyst gives honest recommendations?
+
++ Beliefs are always 0 or 1 and correct
++ Investor's sequentially rational action is follow the recommendation
++ Is it sequentially rational for Analyst?
+  * If the State is Outperform, in equilibrium Analyst gets $a+1$; no incentive to deviate since $0 < a+1$ and $-b-1 < a+1$
+  * If the State is Neutral, in equilibrium Analyst gets $1$; no incentive to deviate as long as $a < 1$ and $-b < 1$
+  * If the State is Outperform, in equilibrium Analyst gets $a+1$; no incentive to deviate as long as $a-1 < 1-b$ and $0 < 1-b$
+  * So since we're assuming $a < 1$ and $b < 1$ (which collectively also imply $a+b < 2$), this is a separating PBE
+
+## Cheap talk game
+
+Assume instead $b > 1$ but $a + b < 2$; is there a semi-separating equilibrium?
+
+. . .
+
+- Say Analyst recommends Buy when State is both Outperform and Neutral but recommends Hold when the State is Underperform
+- After observing Hold, Investor knows the state is Underperform
+- After observing Buy, Invester believes $$ \Pr\left(\text{Outperform}\mid\text{Buy}\right) = \frac{\frac{1}{3}1}{\frac{1}{3}1 + \frac{1}{3}1} = \frac{1}{2} $$ and $$ \Pr\left(\text{Neutral}\mid\text{Buy}\right) = \frac{\frac{1}{3}1}{\frac{1}{3}1 + \frac{1}{3}1} = \frac{1}{2} $$
+- Specify that after observing Sell, Investor believes the state is Underperform
+
+## Cheap talk game
+
+Assume instead $b > 1$ but $a + b < 2$; is there a semi-separating equilibrium?
+
+- Then after Buy recommendation, Investor's expected utility is 1/2 for both Buy and Hold and -1/2 for Sell, so Buy is sequentially rational
+- After Hold or Sell recommendation, Investor sells
+- If State is Outperform or Neutral, Analyst has no incentive to deviate
+- If State is Underperform, Analyst has no incentive to deviate if $2 > a+b$

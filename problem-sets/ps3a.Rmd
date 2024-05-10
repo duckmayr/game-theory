@@ -1,0 +1,85 @@
+---
+title: "GOV 385N Problem Set 3"
+author: "Instructor: JBrandon Duck-Mayr"
+fontsize: 12pt
+output: quack::article
+---
+
+
+# Discrete All-Pay Auction (Tadelis 6.9)
+
+Consider the following all-pay auction:
+Each bidder submits a bid.
+The highest bidder gets the good, but *all bidders pay their bids*.
+Consider an auction in which Player 1 values the item at 3 while Player 2 values the item at 5.
+Each player can bid either 0, 1, or 2.
+If Player $i$ bids more than Player $j$ then $i$ wins the good and both pay.
+If both players bid the same amount then a coin is tossed to determine who gets the good, but again both pay.
+
+a. Write down the game in matrix form. Which strategies survive iterated elimination of strictly dominated strategies?
+b. Find the Nash equilibria for this game.
+
+# Firm-union bargaining (Osborne 177.1)
+
+A firm's output is $L(100 - L)$ when it uses $L \leq 50$ units of labor, and $2500$ when it uses $L > 50$ units of labor.
+The price of output is $1$.
+A union that represents workers presents a wage demand (a nonnegative number $w$), which the firm either accepts or rejects.
+If the firm accepts the demand, it chooses the number $L$ of workers to employ (which you should take to be a continuous variable, not an integer); if it rejects the demand, no production takes place ($L = 0$).
+The firm's preferences are represented by its profit; the union's preferences are represented by the value of $wL$.
+
+a. Formulate this situation as an extensive game with perfect information.
+b. Find the subgame perfect equilibrium (equilibria?) of the game.
+c. Is there an outcome of the game that both parties prefer to any subgame perfect equilibrium outcome?
+d. Find a Nash equilibrium for which the outcome differs from any subgame perfect equilibrium outcome.
+
+# Cohesion in Legislatures (Osborne 228.1)
+
+The following pair of games is designed to study the implications of different legislative procedures for the cohesion of a governing coalition.
+In both games a legislature consists of three members.
+Initially a governing coalition, consisting of two of the legislators, is given.
+There are two periods.
+At the start of each period a member of the governing coalition is randomly chosen (i.e. each legislator is chosen with probability $1/2$) to propose a bill, which is a partition of one unit of payoff between the three legislators.
+Assume that payoff for each member is non-negative.
+Then the legislators simultaneously cast votes; each legislator votes either for or against the bill.
+If two or more legislators vote for the bill, it is accepted.
+Otherwise the course of events differs between the two games.
+In a game that models the current U.S. legislature, rejection of a bill in period $t$ leads to a given partition $d^t$ of the pie to each legislator, where $0 < d^t < 1/2$; the governing coalition (the set from which the propose of a bill is drawn) remains the same in period 2 following a rejection in period 1.
+In a game that models the current U.K. legislature, rejection of a bill brings down the government; a new governing coalition is determined randomly, and no legislator receives any payoff in that period.
+Assume that each legislators votes for the bill when they are indifferent between vote for and vote against.
+
+a. Find the subgame perfect Nash equilibrium (or equilibria) of the game in the U.S. legislature.
+b. Find the subgame perfect Nash equilibrium (or equilibria) of the game in the U.K. legislature. (Hint: If the bill is rejected in the second period, then no legislator receives any payoff and the game ends.)
+c. In which legislature is the governing coalition more cohesive (i.e., all its members vote in the same way)? Explain why.
+
+# Agenda-setting with moves by chance[^1]
+
+Consider the following extensive-form game of perfect information:
+A committee, with ideal point $z_c = 2$, proposes a policy, where a policy is simply a number on the real line.
+After the committee makes its proposal, chance determines the ideal point of the legislature.
+With probability $p$ (where $p$ is larger than 0 but less than 1), the legislature's ideal point $z_l = 0$, and with probability $(1-p)$, the legislature's ideal point equals the committee's ideal point: $z_l = z_c = 2$.
+The legislature, knowing its ideal point, then decides whether to accept or reject the committee's proposal.
+Acceptance results in the committee's proposal being implemented. Rejection, however, results in the status quo being implemented.
+
+We denote a generic policy by $y$, and denote the status quo by $y_0$, where $y_0 = -1$.
+We assume that the legislature and the committee care only about the implemented policy, preferring policies closer to their ideal point to those that are further away.
+The legislature's preferences over policies are represented by the following utility function
+\begin{align*}
+u_l(y)=-|y-z_l|.
+\end{align*}
+Likewise, the committee's preferences over policies are represented by the following utility function
+\begin{align*}
+u_c(y)=-|y-z_c|.
+\end{align*}
+Finally, assume that when indifferent between accepting and rejecting a proposal, the legislature accepts.
+
+a. Draw a game tree that represents the above extensive form game of perfect information which includes a move by chance.
+b. In a subgame prefect Nash equilibrium, what is the set of policies that a legislature with ideal point $z_l = 0$ will accept? Explain your reasoning.
+c. In a subgame prefect equilibrium, what is the set of policies that a legislature with ideal point $z_l = 2$ will accept? Explain your reasoning.
+d. Suppose that $p = 1/4$: with probability one-fourth, the legislature's ideal point equals zero and with probability three-fourths, the legislature's ideal point equals the committee's ideal point. What policy will the committee propose in any strategy profile that constitutes a subgame perfect Nash equilibrium? Explain your reasoning.
+e. What is the is the probability that a veto occurs in any subgame perfect Nash equilibrium in which $p = 1/4$?
+f. Suppose that $p = 9/10$: with probability nine-tenths, the legislature's ideal point equals zero and with probability one-tenth, the legislature's ideal point equals the committee's ideal point. What policy will the committee propose in any strategy profile that constitutes a subgame perfect Nash equilibrium? Explain your reasoning.
+g. In any subgame perfect Nash equilibrium, what is the probability that the legislature rejects the committee's proposal when $p = 9/10$?
+h. Based upon the lessons you've learned from this question, please address the following: Suppose a newspaper columnist argues that the president is not very influential and has little impact on policy because he never used his veto during his time in office. Explain why this argument might be flawed.
+
+[^1]: I do not know who originally wrote this problem.
+      I saw it in multiple contexts during my time at WashU.
